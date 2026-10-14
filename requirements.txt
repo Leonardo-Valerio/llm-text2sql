@@ -1,0 +1,8 @@
+# O PyTorch com CUDA é instalado separadamente (veja o README / setup_windows.bat):
+#   pip install torch --index-url https://download.pytorch.org/whl/cu126
+transformers>=4.56,<5
+peft>=0.17
+datasets>=3.0
+accelerate>=1.0
+gradio>=5.0
+matplotlib
