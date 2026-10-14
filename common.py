@@ -37,7 +37,35 @@ def require_gpu() -> torch.device:
 
 
 def use_bf16() -> bool:
-    return torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+    # bf16 nativo só a partir da arquitetura Ampere (RTX 30xx, compute capability 8.0).
+    # Não usamos torch.cuda.is_bf16_supported() porque ele devolve True também quando o bf16 é só emulado.
+    return torch.cuda.is_available() and torch.cuda.get_device_capability(0)[0] >= 8
+
+
+def precision() -> str:
+    """Precisão numérica usada no treino/inferência: 'bf16', 'fp16' ou 'fp32'.
+    Pode ser forçada com a variável de ambiente PRECISION=fp32|fp16|bf16.
+    - RTX 30xx/40xx/50xx: bf16
+    - GTX 16xx (ex.: GTX 1650): fp32, pois essas placas têm problemas conhecidos com fp16 (NaN)
+    - demais (ex.: RTX 20xx, T4): fp16"""
+    forced = os.environ.get("PRECISION", "auto").lower()
+    if forced in ("fp32", "fp16", "bf16"):
+        return forced
+    if use_bf16():
+        return "bf16"
+    if "GTX 16" in gpu_name().upper():
+        return "fp32"
+    return "fp16"
+
+
+def vram_gb() -> float:
+    return torch.cuda.get_device_properties(0).total_memory / 1024**3 if torch.cuda.is_available() else 0.0
+
+
+def low_vram() -> bool:
+    """GPUs com menos de 6 GB (ex.: GTX 1650 4 GB) usam o perfil econômico:
+    batch menor, gradient checkpointing e menos exemplos de treino."""
+    return vram_gb() < 6
 
 
 def gpu_name() -> str:
@@ -77,12 +105,15 @@ def load_tokenizer():
 
 
 def load_base_model(for_training: bool = False):
-    """Treino: bf16 se a GPU suportar, senão fp32 (+ AMP fp16 no Trainer).
-    Inferência: bf16 ou fp16 para economizar VRAM."""
-    if for_training:
-        dtype = torch.bfloat16 if use_bf16() else torch.float32
+    """bf16: pesos em bf16. fp16: pesos em fp32 no treino (AMP) e fp16 na inferência.
+    fp32: tudo em fp32 (mais lento, porém estável em GTX 16xx)."""
+    p = precision()
+    if p == "bf16":
+        dtype = torch.bfloat16
+    elif p == "fp16":
+        dtype = torch.float32 if for_training else torch.float16
     else:
-        dtype = torch.bfloat16 if use_bf16() else torch.float16
+        dtype = torch.float32
     model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=dtype)
     return model.to("cuda")
 

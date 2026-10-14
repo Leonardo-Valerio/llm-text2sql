@@ -46,7 +46,7 @@ Saída:    SELECT AVG(salario) FROM funcionarios WHERE departamento = 'Engenhari
 [`b-mc2/sql-create-context`](https://huggingface.co/datasets/b-mc2/sql-create-context): ~78 mil exemplos de
 (pergunta, schema, SQL), derivados do WikiSQL e do Spider.
 
-- **Treino:** 2.000 exemplos
+- **Treino:** 2.000 exemplos (1.000 em GPUs com menos de 6 GB)
 - **Teste:** 100 exemplos separados, **nunca vistos no treino** (divisão fixa com `seed=42`)
 
 ## 4. Técnica: fine-tuning com LoRA
@@ -56,7 +56,10 @@ original e treinamos pequenas matrizes adicionais (cerca de 1–2% dos parâmetr
 Isso reduz muito o uso de memória e o tempo de treino, com resultado próximo ao fine-tuning completo.
 
 - A *loss* é calculada **só sobre a resposta SQL**, não sobre o prompt (o modelo aprende a responder, não a repetir a pergunta).
-- Precisão mista: **bf16** em GPUs RTX 30xx/40xx/50xx; **fp16** nas mais antigas (detecção automática).
+- Precisão escolhida automaticamente: **bf16** em RTX 30xx/40xx/50xx, **fp16** em RTX 20xx/T4 e **fp32** em GTX 16xx
+  (essas placas têm problemas conhecidos com fp16). Pode ser forçada com a variável de ambiente `PRECISION`.
+- GPUs com menos de 6 GB (ex.: GTX 1650 4 GB) usam um **perfil econômico** automático: batch 2 × 8 acumulações
+  (mesmo batch efetivo de 16), *gradient checkpointing* e 1.000 exemplos de treino.
 - Tudo roda obrigatoriamente na **GPU**: os scripts abortam se CUDA não estiver disponível.
 
 ```
@@ -140,7 +143,7 @@ Interface web em **Gradio** (`python app.py` → http://127.0.0.1:7860):
 
 | `nvidia-smi` mostra | Use no PyTorch |
 |---|---|
-| 12.8 ou maior (obrigatório para RTX 50xx) | `cu128` |
+| 12.8 ou maior (inclui 13.x) | `cu128` (ou `cu126`, que também funciona; recomendado para GTX 16xx) |
 | 12.6 – 12.7 | `cu126` |
 | 12.4 – 12.5 | `cu124` |
 | 11.8 – 12.3 | `cu118` |
@@ -169,7 +172,8 @@ python run_experiments.py
 python app.py
 ```
 
-Faltou memória (`CUDA out of memory`)? Use `python run_experiments.py --batch_size 4` (ou `2`).
+Faltou memória (`CUDA out of memory`)? Use `python run_experiments.py --batch_size 1`. Feche o navegador e outros
+programas que usem a GPU durante o treino.
 
 ### Comandos individuais
 

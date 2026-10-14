@@ -55,8 +55,12 @@ try:
         p = torch.cuda.get_device_properties(0)
         vram = p.total_memory / 1024**3
         log(f"  GPU: {p.name} | VRAM: {vram:.1f} GB | Compute capability: {p.major}.{p.minor}")
-        log(f"  bf16 suportado: {torch.cuda.is_bf16_supported()}")
-        ok(vram >= 4, "VRAM suficiente (>= 4 GB)", "VRAM < 4 GB: use --batch_size 2 no run_experiments.py")
+        log(f"  bf16 nativo: {p.major >= 8}")
+        ok(vram >= 3.5, "VRAM suficiente (>= 4 GB)", "VRAM < 4 GB: use --batch_size 1 no run_experiments.py")
+        sys.path.insert(0, str(Path(__file__).parent))
+        from common import low_vram, precision
+        log(f"  Precisão que será usada: {precision()} | perfil: "
+            f"{'econômico (batch 2, gradient checkpointing, 1000 exemplos)' if low_vram() else 'padrão'}")
         # Teste rápido de desempenho
         a = torch.randn(4096, 4096, device="cuda", dtype=torch.float16)
         torch.cuda.synchronize()

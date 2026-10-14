@@ -48,7 +48,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--adapter", default=None, help="Pasta do adapter LoRA (omitir = modelo base)")
     ap.add_argument("--n_test", type=int, default=100)
-    ap.add_argument("--batch_size", type=int, default=16)
+    ap.add_argument("--batch_size", type=int, default=8)
     args = ap.parse_args()
 
     require_gpu()

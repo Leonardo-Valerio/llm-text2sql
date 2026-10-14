@@ -13,7 +13,8 @@ from pathlib import Path
 
 import torch
 
-from common import MODEL_ID, gpu_name, load_base_model, load_splits, load_tokenizer, require_gpu
+from common import (MODEL_ID, gpu_name, load_base_model, load_splits, load_tokenizer, low_vram,
+                    precision, require_gpu, vram_gb)
 from evaluate import evaluate_model
 from train import train_lora
 
@@ -102,16 +103,24 @@ def write_reports(base_metrics, base_rows, experiments, best):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true", help="teste rápido com poucos dados")
-    ap.add_argument("--n_train", type=int, default=2000)
+    ap.add_argument("--n_train", type=int, default=None, help="padrão: 2000 (1000 em GPUs < 6 GB)")
     ap.add_argument("--n_test", type=int, default=100)
-    ap.add_argument("--batch_size", type=int, default=8, help="diminua para 4 se faltar VRAM")
+    ap.add_argument("--batch_size", type=int, default=None,
+                    help="padrão: 8 (2 em GPUs < 6 GB). Diminua se der 'CUDA out of memory'")
     args = ap.parse_args()
 
     require_gpu()
-    print(f"GPU detectada: {gpu_name()}")
+    small = low_vram()
+    args.n_train = args.n_train or (1000 if small else 2000)
+    args.batch_size = args.batch_size or (2 if small else 8)
+    grad_accum = max(1, 16 // args.batch_size)  # mantém o batch efetivo em 16
+    eval_bs = 8 if small else 16
+    print(f"GPU detectada: {gpu_name()} ({vram_gb():.1f} GB) | precisão: {precision()} | "
+          f"perfil {'econômico (GPU < 6 GB)' if small else 'padrão'} | n_train={args.n_train} | "
+          f"batch={args.batch_size}x{grad_accum}")
     configs = CONFIGS
     if args.quick:
-        args.n_train, args.n_test, configs = 300, 30, CONFIGS[:1]
+        args.n_train, args.n_test, configs = 200, 20, CONFIGS[:1]
 
     RESULTS.mkdir(exist_ok=True)
     train_ds, test_ds = load_splits(args.n_train, args.n_test)
@@ -120,7 +129,7 @@ def main():
     # 1) Modelo base, sem treino (linha de comparação)
     print("\n=== Avaliando modelo base (antes do fine-tuning) ===")
     base = load_base_model()
-    base_metrics, base_rows = evaluate_model(base, tok, test_ds, desc="base")
+    base_metrics, base_rows = evaluate_model(base, tok, test_ds, batch_size=eval_bs, desc="base")
     print(base_metrics)
     del base
     free_gpu()
@@ -129,8 +138,8 @@ def main():
     experiments = []
     for cfg in configs:
         model, tmetrics = train_lora(cfg["name"], cfg["lr"], cfg["r"], cfg["epochs"], train_ds, tok,
-                                     batch_size=args.batch_size)
-        emetrics, rows = evaluate_model(model, tok, test_ds, desc=cfg["name"])
+                                     batch_size=args.batch_size, grad_accum=grad_accum)
+        emetrics, rows = evaluate_model(model, tok, test_ds, batch_size=eval_bs, desc=cfg["name"])
         print(emetrics)
         experiments.append({"train": tmetrics, "eval": emetrics, "rows": rows})
         del model

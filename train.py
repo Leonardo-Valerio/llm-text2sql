@@ -15,7 +15,7 @@ from peft import LoraConfig, get_peft_model
 from transformers import DataCollatorForSeq2Seq, Trainer, TrainingArguments
 
 from common import (SEED, build_messages, load_base_model, load_splits, load_tokenizer,
-                    require_gpu, use_bf16)
+                    low_vram, precision, require_gpu)
 
 TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 
@@ -35,13 +35,20 @@ def tokenize_dataset(ds, tok, max_len: int = 512):
 
 
 def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
-               batch_size: int = 8, grad_accum: int = 2, out_root: str = "outputs"):
+               batch_size: int = 8, grad_accum: int = 2, out_root: str = "outputs",
+               grad_checkpointing: bool | None = None):
     """Treina um adapter LoRA e devolve (modelo_treinado, métricas_de_treino)."""
     require_gpu()
     torch.manual_seed(SEED)
     torch.cuda.reset_peak_memory_stats()
 
     model = load_base_model(for_training=True)
+    if grad_checkpointing is None:
+        grad_checkpointing = low_vram()
+    if grad_checkpointing:  # economiza VRAM recalculando ativações no backward
+        model.config.use_cache = False
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+        model.enable_input_require_grads()
     lora_cfg = LoraConfig(r=r, lora_alpha=2 * r, lora_dropout=0.05,
                           target_modules=TARGET_MODULES, task_type="CAUSAL_LM")
     model = get_peft_model(model, lora_cfg)
@@ -51,7 +58,7 @@ def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
     tok.padding_side = "right"
     tokenized = tokenize_dataset(train_ds, tok)
     out_dir = Path(out_root) / name
-    bf16 = use_bf16()
+    prec = precision()
     total_steps = math.ceil(len(tokenized) / (batch_size * grad_accum)) * epochs
     args = TrainingArguments(
         output_dir=str(out_dir),
@@ -64,8 +71,8 @@ def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
         logging_steps=10,
         save_strategy="no",
         report_to="none",
-        bf16=bf16,
-        fp16=not bf16,
+        bf16=prec == "bf16",
+        fp16=prec == "fp16",
         seed=SEED,
         remove_unused_columns=False,
         dataloader_pin_memory=True,
@@ -77,12 +84,16 @@ def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
         data_collator=DataCollatorForSeq2Seq(tok, padding=True, label_pad_token_id=-100),
     )
 
-    print(f"\n=== Treinando {name} | lr={lr} r={r} epochs={epochs} | "
+    print(f"\n=== Treinando {name} | lr={lr} r={r} epochs={epochs} | precisão={prec} | "
+          f"batch={batch_size}x{grad_accum} | checkpointing={grad_checkpointing} | "
           f"{trainable:,} params treináveis de {total:,} ({100 * trainable / total:.2f}%) ===")
     t0 = time.time()
     result = trainer.train()
     train_time = time.time() - t0
 
+    if grad_checkpointing:  # volta ao modo normal para a avaliação (geração com KV cache)
+        model.gradient_checkpointing_disable()
+        model.config.use_cache = True
     model.save_pretrained(out_dir)
     tok.save_pretrained(out_dir)
     loss_hist = [{"step": h["step"], "loss": h["loss"]} for h in trainer.state.log_history if "loss" in h]
@@ -92,7 +103,7 @@ def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
         "trainable_params": trainable, "train_loss": round(result.training_loss, 4),
         "train_time_s": round(train_time, 1),
         "peak_vram_gb": round(torch.cuda.max_memory_allocated() / 1024**3, 2),
-        "precision": "bf16" if bf16 else "fp16 (AMP)",
+        "precision": prec, "gradient_checkpointing": grad_checkpointing,
         "loss_history": loss_hist, "adapter_dir": str(out_dir),
     }
     (out_dir / "train_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
@@ -107,14 +118,17 @@ def main():
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--r", type=int, default=8)
     ap.add_argument("--epochs", type=int, default=1)
-    ap.add_argument("--n_train", type=int, default=2000)
-    ap.add_argument("--batch_size", type=int, default=8)
+    ap.add_argument("--n_train", type=int, default=None, help="padrão: 2000 (1000 em GPUs < 6 GB)")
+    ap.add_argument("--batch_size", type=int, default=None, help="padrão: 8 (2 em GPUs < 6 GB)")
     args = ap.parse_args()
 
     require_gpu()
-    train_ds, _ = load_splits(args.n_train)
+    small = low_vram()
+    n_train = args.n_train or (1000 if small else 2000)
+    bs = args.batch_size or (2 if small else 8)
+    train_ds, _ = load_splits(n_train)
     tok = load_tokenizer()
-    train_lora(args.name, args.lr, args.r, args.epochs, train_ds, tok, batch_size=args.batch_size)
+    train_lora(args.name, args.lr, args.r, args.epochs, train_ds, tok, batch_size=bs, grad_accum=max(1, 16 // bs))
 
 
 if __name__ == "__main__":
