@@ -98,7 +98,7 @@ def generate(model, tok, batch_msgs, max_new_tokens: int = 128, temperature: flo
         kwargs.update(do_sample=True, temperature=temperature, top_p=0.9)
     else:
         kwargs.update(do_sample=False, temperature=None, top_p=None, top_k=None)
-    out = model.generate(**enc, **kwargs)
+    out = model.generate(input_ids=enc["input_ids"], attention_mask=enc["attention_mask"], **kwargs)
     gen = out[:, enc["input_ids"].shape[1]:]
     return [t.strip() for t in tok.batch_decode(gen, skip_special_tokens=True)]
 

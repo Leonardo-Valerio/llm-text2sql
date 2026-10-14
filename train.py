@@ -6,6 +6,7 @@ Para rodar todos os experimentos de uma vez, use run_experiments.py.
 """
 import argparse
 import json
+import math
 import time
 from pathlib import Path
 
@@ -51,6 +52,7 @@ def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
     tokenized = tokenize_dataset(train_ds, tok)
     out_dir = Path(out_root) / name
     bf16 = use_bf16()
+    total_steps = math.ceil(len(tokenized) / (batch_size * grad_accum)) * epochs
     args = TrainingArguments(
         output_dir=str(out_dir),
         per_device_train_batch_size=batch_size,
@@ -58,7 +60,7 @@ def train_lora(name: str, lr: float, r: int, epochs: int, train_ds, tok,
         num_train_epochs=epochs,
         learning_rate=lr,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.05,
+        warmup_steps=max(1, int(0.05 * total_steps)),  # warmup de 5%
         logging_steps=10,
         save_strategy="no",
         report_to="none",
