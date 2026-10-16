@@ -1,0 +1,48 @@
+================================================================
+ VERIFICAÇÃO DO AMBIENTE  -  CP2/CP3 Generative AI for Engineering
+================================================================
+Sistema: Windows 10 | Python 3.11.3
+  [OK]   Python >= 3.10
+
+[1] Driver NVIDIA (nvidia-smi)
+Thu Oct 15 22:33:12 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 581.57                 Driver Version: 581.57         CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce GTX 1650      WDDM  |   00000000:01:00.0 Off |                  N/A |
+| N/A   51C    P8              4W /   50W |       0MiB /   4096MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+[2] CUDA Toolkit (nvcc) - opcional para este projeto, o PyTorch já traz o runtime CUDA
+  Build cuda_12.6.r12.6/compiler.34431801_0
+
+[3] PyTorch + CUDA
+  torch 2.14.1+cu126 | CUDA do PyTorch: 12.6
+  [OK]   torch.cuda.is_available() = True
+  GPU: NVIDIA GeForce GTX 1650 | VRAM: 4.0 GB | Compute capability: 7.5
+  bf16 nativo: False
+  [OK]   VRAM suficiente (>= 4 GB)
+  Precisão que será usada: fp32 | perfil: econômico (batch 2, gradient checkpointing, 1000 exemplos)
+  Teste de multiplicação de matrizes na GPU: 0.3 TFLOPS (fp16)
+
+[4] Bibliotecas
+  [OK]   transformers 5.19.0
+  [OK]   peft 0.21.2
+  [OK]   datasets 5.1.0
+  [OK]   accelerate 1.15.0
+  [OK]   gradio 6.30.0
+  [OK]   matplotlib 3.11.2
+================================================================

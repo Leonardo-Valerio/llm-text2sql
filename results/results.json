@@ -1,0 +1,3376 @@
+{
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "base": {
+    "eval": {
+      "exact_match": 0.13,
+      "similarity": 0.5516,
+      "eval_time_s": 24.1,
+      "ms_por_exemplo": 241.3,
+      "n_test": 100
+    },
+    "rows": [
+      {
+        "question": "When Essendon played away; where did they play?",
+        "context": "CREATE TABLE table_name_50 (venue VARCHAR, away_team VARCHAR)",
+        "gold": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+        "pred": "away_team Essendon",
+        "exact_match": false,
+        "similarity": 0.4474
+      },
+      {
+        "question": "What is the lowest numbered game against Phoenix with a record of 29-17?",
+        "context": "CREATE TABLE table_name_61 (game INTEGER, opponent VARCHAR, record VARCHAR)",
+        "gold": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+        "pred": "SELECT MIN(game) FROM table_name_61 WHERE opponent = 'Phoenix' AND record = '29-17'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Who did the Texan's play on Week 4?",
+        "context": "CREATE TABLE table_name_37 (opponent VARCHAR, week VARCHAR)",
+        "gold": "SELECT opponent FROM table_name_37 WHERE week = \"4\"",
+        "pred": "Texan's played against Kansas City Chiefs in Week 4.",
+        "exact_match": false,
+        "similarity": 0.3366
+      },
+      {
+        "question": "Which Points have Touchdowns larger than 0, and an Extra points smaller than 0?",
+        "context": "CREATE TABLE table_name_70 (points INTEGER, touchdowns VARCHAR, extra_points VARCHAR)",
+        "gold": "SELECT SUM(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+        "pred": "SELECT points FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+        "exact_match": false,
+        "similarity": 0.9583
+      },
+      {
+        "question": "What is the name of the player who is Sco and moving to greenock morton in the summer?",
+        "context": "CREATE TABLE table_name_83 (name VARCHAR, moving_to VARCHAR, nat VARCHAR, transfer_window VARCHAR)",
+        "gold": "SELECT name FROM table_name_83 WHERE nat = \"sco\" AND transfer_window = \"summer\" AND moving_to = \"greenock morton\"",
+        "pred": "name, \"Sco\", \"greenock morton\"",
+        "exact_match": false,
+        "similarity": 0.3852
+      },
+      {
+        "question": "Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?",
+        "context": "CREATE TABLE votes (contestant_number VARCHAR); CREATE TABLE contestants (contestant_number VARCHAR, contestant_name VARCHAR)",
+        "gold": "SELECT T1.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY COUNT(*) LIMIT 1",
+        "pred": "contestant_number NULL, contestant_name NULL",
+        "exact_match": false,
+        "similarity": 0.3144
+      },
+      {
+        "question": "Which venue had the result 7-1?",
+        "context": "CREATE TABLE table_name_50 (venue VARCHAR, result VARCHAR)",
+        "gold": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+        "pred": "venue VARCHAR, result VARCHAR WHERE result = \"7-1\".",
+        "exact_match": false,
+        "similarity": 0.5714
+      },
+      {
+        "question": "What did the tournament that got an A in 1945 get in 1949?",
+        "context": "CREATE TABLE table_name_22 (Id VARCHAR)",
+        "gold": "SELECT 1949 FROM table_name_22 WHERE 1945 = \"a\"",
+        "pred": "SELECT Id FROM table_name_22 WHERE Year = 1949 AND A = 1",
+        "exact_match": false,
+        "similarity": 0.7629
+      },
+      {
+        "question": "Find the states where have the colleges whose enrollments are less than the largest size.",
+        "context": "CREATE TABLE college (state VARCHAR, enr INTEGER)",
+        "gold": "SELECT DISTINCT state FROM college WHERE enr < (SELECT MAX(enr) FROM college)",
+        "pred": "SELECT state FROM college WHERE enr < (SELECT MAX(enrollments) FROM college)",
+        "exact_match": false,
+        "similarity": 0.8844
+      },
+      {
+        "question": "What is the name of the episode that had 9.89 million U.S. viewers?",
+        "context": "CREATE TABLE table_24648983_1 (title VARCHAR, us_viewers__million_ VARCHAR)",
+        "gold": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+        "pred": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = '9.89'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "What are the names of the workshop groups that have bookings with status code \"stop\"?",
+        "context": "CREATE TABLE Bookings (Workshop_Group_ID VARCHAR, Status_Code VARCHAR); CREATE TABLE Drama_Workshop_Groups (Store_Name VARCHAR, Workshop_Group_ID VARCHAR)",
+        "gold": "SELECT T2.Store_Name FROM Bookings AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T1.Status_Code = \"stop\"",
+        "pred": "SELECT Store_Name FROM Drama_Workshop_Groups WHERE Workshop_Group_ID IN (SELECT Workshops.Workshop_Group_ID FROM Bookings WHERE Status_Code = 'Stop')",
+        "exact_match": false,
+        "similarity": 0.7329
+      },
+      {
+        "question": "Where was the opponent Germany?",
+        "context": "CREATE TABLE table_name_96 (location VARCHAR, opponenent VARCHAR)",
+        "gold": "SELECT location FROM table_name_96 WHERE opponenent = \"germany\"",
+        "pred": "SELECT opponent FROM table_name_96 WHERE opponenent = 'Germany'",
+        "exact_match": false,
+        "similarity": 0.918
+      },
+      {
+        "question": "Name the candidates for result of lost renomination democratic loss",
+        "context": "CREATE TABLE table_1342149_24 (candidates VARCHAR, result VARCHAR)",
+        "gold": "SELECT candidates FROM table_1342149_24 WHERE result = \"Lost renomination Democratic loss\"",
+        "pred": "candidates, result",
+        "exact_match": false,
+        "similarity": 0.3048
+      },
+      {
+        "question": "What is the number of party in the arkansas 1 district",
+        "context": "CREATE TABLE table_1341930_5 (party VARCHAR, district VARCHAR)",
+        "gold": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+        "pred": "2",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "How many alt names does 1964-011a have?",
+        "context": "CREATE TABLE table_12141496_1 (alt_name VARCHAR, id VARCHAR)",
+        "gold": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011A\"",
+        "pred": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = '1964-011a'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Who is the opponent of the game played on November 20, 1995?",
+        "context": "CREATE TABLE table_name_66 (opponent VARCHAR, date VARCHAR)",
+        "gold": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+        "pred": "opponent football, usa",
+        "exact_match": false,
+        "similarity": 0.3294
+      },
+      {
+        "question": "What is the position of tickets sold/available when the sellout is 82%?",
+        "context": "CREATE TABLE table_16331025_2 (tickets_sold___available VARCHAR, sellout___percentage_ VARCHAR)",
+        "gold": "SELECT COUNT(tickets_sold___available) FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+        "pred": "SELECT `tickets_sold___available` FROM table_16331025_2 WHERE `sellout_percentage_` = '82'",
+        "exact_match": false,
+        "similarity": 0.9171
+      },
+      {
+        "question": "Which College/Junior/Club Team (League) did the player in round 6 play for?",
+        "context": "CREATE TABLE table_name_98 (college_junior_club_team__league_ VARCHAR, round VARCHAR)",
+        "gold": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+        "pred": "college_junior_club_team__league_6",
+        "exact_match": false,
+        "similarity": 0.6239
+      },
+      {
+        "question": "How many in the introduced section had Fokker as a manufacturer, a quantity of 5, and retired later than 1999?",
+        "context": "CREATE TABLE table_name_94 (introduced INTEGER, retired VARCHAR, manufacturer VARCHAR, quantity VARCHAR)",
+        "gold": "SELECT SUM(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = 5 AND retired > 1999",
+        "pred": "SELECT COUNT(*) FROM table_name_94 WHERE manufacturer = 'Fokker' AND quantity = '5' AND introduced > '1999'",
+        "exact_match": false,
+        "similarity": 0.86
+      },
+      {
+        "question": "Where was the audition venue where Peninha was the guest fourth judge?",
+        "context": "CREATE TABLE table_27615445_1 (audition_venue VARCHAR, guest_fourth_judge VARCHAR)",
+        "gold": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+        "pred": "Audition Venue - Auditorium 3",
+        "exact_match": false,
+        "similarity": 0.3551
+      },
+      {
+        "question": "Who was the runner-up in the Memorial Tournament?",
+        "context": "CREATE TABLE table_1602858_1 (runner_s__up VARCHAR, tournament VARCHAR)",
+        "gold": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial tournament\"",
+        "pred": "runner_s__up FROM table_1602858_1 WHERE tournament = 'Memorial' AND runner_s__up IS NOT NULL LIMIT 1",
+        "exact_match": false,
+        "similarity": 0.6893
+      },
+      {
+        "question": "What is the number of bonus points when there are 2 drawn and the points against is 599?",
+        "context": "CREATE TABLE table_name_83 (bonus_points VARCHAR, drawn VARCHAR, points_against VARCHAR)",
+        "gold": "SELECT bonus_points FROM table_name_83 WHERE drawn = \"2\" AND points_against = \"599\"",
+        "pred": "4",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "Which game was a Platformer?",
+        "context": "CREATE TABLE table_name_90 (game VARCHAR, genre VARCHAR)",
+        "gold": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+        "pred": "platformer",
+        "exact_match": false,
+        "similarity": 0.3077
+      },
+      {
+        "question": "Who was the individual in the event of 1998 Pokljuka?",
+        "context": "CREATE TABLE table_name_33 (individual VARCHAR, event VARCHAR)",
+        "gold": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+        "pred": "John Krasnicic",
+        "exact_match": false,
+        "similarity": 0.0769
+      },
+      {
+        "question": "What's the average draft pick number from Carson-Newman College before Round 7?",
+        "context": "CREATE TABLE table_name_21 (pick__number INTEGER, college VARCHAR, round VARCHAR)",
+        "gold": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman\" AND round < 7",
+        "pred": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = 'Carson-Newman' AND round <= 7",
+        "exact_match": false,
+        "similarity": 0.9941
+      },
+      {
+        "question": "Who was the spouse of the consort who was born as rania al yassin?",
+        "context": "CREATE TABLE table_name_27 (spouse_to VARCHAR, born_as VARCHAR)",
+        "gold": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+        "pred": "Rania Al Yassin",
+        "exact_match": false,
+        "similarity": 0.3659
+      },
+      {
+        "question": "How many figures for wickets when the strike rate is 54.0?",
+        "context": "CREATE TABLE table_19662262_6 (wickets VARCHAR, strike_rate VARCHAR)",
+        "gold": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+        "pred": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = '54.0'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Who's the Communist ticket with an American Labor ticket of joseph v. o'leary?",
+        "context": "CREATE TABLE table_name_49 (communist_ticket VARCHAR, american_labor_ticket VARCHAR)",
+        "gold": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+        "pred": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = 'joseph v. o'rlieary'",
+        "exact_match": false,
+        "similarity": 0.989
+      },
+      {
+        "question": "What is the HDI 2011 of the country with a DI 2011 of 7.63?",
+        "context": "CREATE TABLE table_name_54 (hdi_2011 VARCHAR, di_2011 VARCHAR)",
+        "gold": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+        "pred": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = '7.63'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "How much Against has Draws of 2, and Losses smaller than 4?",
+        "context": "CREATE TABLE table_name_17 (against INTEGER, draws VARCHAR, losses VARCHAR)",
+        "gold": "SELECT SUM(against) FROM table_name_17 WHERE draws = 2 AND losses < 4",
+        "pred": "SELECT against FROM table_name_17 WHERE draws = 2 AND losses < 4",
+        "exact_match": false,
+        "similarity": 0.9516
+      },
+      {
+        "question": "What was Galatasaray score when when he won in 1990 and Trabzonspor was the runner-up?",
+        "context": "CREATE TABLE table_name_24 (score VARCHAR, year VARCHAR, winners VARCHAR, runners_up VARCHAR)",
+        "gold": "SELECT score FROM table_name_24 WHERE winners = \"galatasaray\" AND runners_up = \"trabzonspor\" AND year = 1990",
+        "pred": "8",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "Who was the runner-up of the competition played at Minikahda Club?",
+        "context": "CREATE TABLE table_name_55 (runner_up VARCHAR, venue VARCHAR)",
+        "gold": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+        "pred": "minikahda club",
+        "exact_match": false,
+        "similarity": 0.359
+      },
+      {
+        "question": "What is the catalog number for the Grilled Cheese label?",
+        "context": "CREATE TABLE table_name_33 (catalog VARCHAR, label VARCHAR)",
+        "gold": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+        "pred": "catalog_12345",
+        "exact_match": false,
+        "similarity": 0.24
+      },
+      {
+        "question": "Which opponent had the result of W 24-14?",
+        "context": "CREATE TABLE table_name_64 (opponent VARCHAR, result VARCHAR)",
+        "gold": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+        "pred": "opponent w 24-14",
+        "exact_match": false,
+        "similarity": 0.4384
+      },
+      {
+        "question": "What is the newest season?",
+        "context": "CREATE TABLE table_2140071_7 (season INTEGER)",
+        "gold": "SELECT MAX(season) FROM table_2140071_7",
+        "pred": "8",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "Which Surface has an Opponent(s) of anna-lena grönefeld tatjana malek?",
+        "context": "CREATE TABLE table_name_8 (surface VARCHAR, opponent_s_ VARCHAR)",
+        "gold": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld tatjana malek\"",
+        "pred": "surface tennis",
+        "exact_match": false,
+        "similarity": 0.24
+      },
+      {
+        "question": "In what TV season did the 3rd season air?",
+        "context": "CREATE TABLE table_1348989_2 (TV VARCHAR, season VARCHAR)",
+        "gold": "SELECT TV AS season FROM table_1348989_2 WHERE season = \"3rd\"",
+        "pred": "season 3",
+        "exact_match": false,
+        "similarity": 0.2388
+      },
+      {
+        "question": "Who ran the fastest lap in the team that competed in Zolder, in which Ferrari was the Constructor?",
+        "context": "CREATE TABLE table_name_39 (fastest_lap VARCHAR, constructor VARCHAR, location VARCHAR)",
+        "gold": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+        "pred": "Ferrari",
+        "exact_match": false,
+        "similarity": 0.1489
+      },
+      {
+        "question": "What was the NBA draft status for Northeast High School?",
+        "context": "CREATE TABLE table_name_7 (nba_draft VARCHAR, school VARCHAR)",
+        "gold": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high school\"",
+        "pred": "school Northeast High",
+        "exact_match": false,
+        "similarity": 0.4348
+      },
+      {
+        "question": "What is the high Population (total) from 1976 with a (Barcaldine) smaller than 1,780?",
+        "context": "CREATE TABLE table_name_96 (population__total_ INTEGER, year VARCHAR, _barcaldine_ VARCHAR)",
+        "gold": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = 1976 AND _barcaldine_ < 1 OFFSET 780",
+        "pred": "SELECT MAX(population__total_) AS max_population FROM table_name_96 WHERE year = '1976' AND _barcaldine_ < 1780",
+        "exact_match": false,
+        "similarity": 0.86
+      },
+      {
+        "question": "What 1953 has 2 as a 1949, and 3 as 1952?",
+        "context": "CREATE TABLE table_name_48 (Id VARCHAR)",
+        "gold": "SELECT 1953 FROM table_name_48 WHERE 1949 = \"2\" AND 1952 = \"3\"",
+        "pred": "SELECT Id FROM table_name_48 WHERE YEAR(Year) = 1953 AND 1949 = 2 AND 1952 = 3",
+        "exact_match": false,
+        "similarity": 0.7692
+      },
+      {
+        "question": "What is the total number of losses for the over 30 games played?",
+        "context": "CREATE TABLE table_name_50 (losses VARCHAR, played INTEGER)",
+        "gold": "SELECT COUNT(losses) FROM table_name_50 WHERE played > 30",
+        "pred": "SELECT SUM(losses) FROM table_name_50 WHERE played > 30",
+        "exact_match": false,
+        "similarity": 0.9434
+      },
+      {
+        "question": "Show names for artists without any exhibition.",
+        "context": "CREATE TABLE artist (name VARCHAR, artist_id VARCHAR); CREATE TABLE exhibition (name VARCHAR, artist_id VARCHAR)",
+        "gold": "SELECT name FROM artist WHERE NOT artist_id IN (SELECT artist_id FROM exhibition)",
+        "pred": "SELECT name FROM artist WHERE artist_id NOT IN (SELECT artist_id FROM exhibition)",
+        "exact_match": false,
+        "similarity": 0.95
+      },
+      {
+        "question": "What are the countries of mountains with height bigger than 5000?",
+        "context": "CREATE TABLE mountain (Country VARCHAR, Height INTEGER)",
+        "gold": "SELECT Country FROM mountain WHERE Height > 5000",
+        "pred": "SELECT Country FROM mountain WHERE Height > 5000",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "What is the highest Money ( £ ), when Player is \"Peter Hedblom\"?",
+        "context": "CREATE TABLE table_name_95 (money___ INTEGER, player VARCHAR)",
+        "gold": "SELECT MAX(money___) AS £__ FROM table_name_95 WHERE player = \"peter hedblom\"",
+        "pred": "SELECT MAX(money_) FROM table_name_95 WHERE player = 'Peter Hedblom'",
+        "exact_match": false,
+        "similarity": 0.9353
+      },
+      {
+        "question": "When was the appointment date for VFL Wolfsburg?",
+        "context": "CREATE TABLE table_name_72 (date_of_appointment VARCHAR, team VARCHAR)",
+        "gold": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+        "pred": "1986-05-14",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "What language is the moviein that is on UMP movies network through Sky service?",
+        "context": "CREATE TABLE table_name_87 (language VARCHAR, network VARCHAR, genre VARCHAR, service VARCHAR)",
+        "gold": "SELECT language FROM table_name_87 WHERE genre = \"movies\" AND service = \"sky\" AND network = \"ump movies\"",
+        "pred": "genre VARCHAR, network VARCHAR",
+        "exact_match": false,
+        "similarity": 0.2677
+      },
+      {
+        "question": "What Location has a Design flow (LPM) smaller than 1900, and a Construction Start of 2006 june?",
+        "context": "CREATE TABLE table_name_40 (location VARCHAR, design_flow__lpm_ VARCHAR, construction_start VARCHAR)",
+        "gold": "SELECT location FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = \"2006 june\"",
+        "pred": "location VARCHAR, design_flow_lpm_<NAME>, construction_start_2006_june",
+        "exact_match": false,
+        "similarity": 0.6627
+      },
+      {
+        "question": "What high definition television options are available for Italia 1?",
+        "context": "CREATE TABLE table_15887683_1 (hdtv VARCHAR, television_service VARCHAR)",
+        "gold": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+        "pred": "hdtv:Italia 1",
+        "exact_match": false,
+        "similarity": 0.2927
+      },
+      {
+        "question": "Which suffix has the prefix of isothiocyanato- (-ncs)?",
+        "context": "CREATE TABLE table_name_17 (suffix VARCHAR, prefix VARCHAR)",
+        "gold": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato- (-ncs)\"",
+        "pred": "isothiocyanate-",
+        "exact_match": false,
+        "similarity": 0.3333
+      },
+      {
+        "question": "What is the enrollment at the school of Hamilton community?",
+        "context": "CREATE TABLE table_name_3 (enrollment INTEGER, school VARCHAR)",
+        "gold": "SELECT AVG(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+        "pred": "SELECT enrollment FROM table_name_3 WHERE school = 'Hamilton Community'",
+        "exact_match": false,
+        "similarity": 0.9577
+      },
+      {
+        "question": "What is the date of return for the program for the program \"Big Brother\"?",
+        "context": "CREATE TABLE table_29566606_11 (date_of_return VARCHAR, programme VARCHAR)",
+        "gold": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+        "pred": "2013-11-04",
+        "exact_match": false,
+        "similarity": 0.0952
+      },
+      {
+        "question": "On what date was Patty Fendick an opponent?",
+        "context": "CREATE TABLE table_name_95 (date VARCHAR, opponent VARCHAR)",
+        "gold": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+        "pred": "2018-03-14",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "What position did the player who was with the grizzlies from 2007-2009 play?",
+        "context": "CREATE TABLE table_name_89 (position VARCHAR, years_for_grizzlies VARCHAR)",
+        "gold": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+        "pred": "basketball",
+        "exact_match": false,
+        "similarity": 0.0976
+      },
+      {
+        "question": "When do all the researcher role staff start to work, and when do they stop working?",
+        "context": "CREATE TABLE Project_Staff (date_from VARCHAR, date_to VARCHAR, role_code VARCHAR)",
+        "gold": "SELECT date_from, date_to FROM Project_Staff WHERE role_code = 'researcher'",
+        "pred": "SELECT date_from, date_to FROM Project_Staff WHERE role_code = 'RESEARCHER' ORDER BY date_from ASC LIMIT 1",
+        "exact_match": false,
+        "similarity": 0.8229
+      },
+      {
+        "question": "what is the analog type for wxmi?",
+        "context": "CREATE TABLE table_name_9 (analog VARCHAR, callsign VARCHAR)",
+        "gold": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+        "pred": "wxmi has an analog type of \"AM\".",
+        "exact_match": false,
+        "similarity": 0.3529
+      },
+      {
+        "question": "what's the record with result being w 21–7",
+        "context": "CREATE TABLE table_14951643_1 (record VARCHAR, result VARCHAR)",
+        "gold": "SELECT record FROM table_14951643_1 WHERE result = \"W 21–7\"",
+        "pred": "SELECT record FROM table_14951643_1 WHERE result = 'W 21-7'",
+        "exact_match": false,
+        "similarity": 0.9825
+      },
+      {
+        "question": "What is the market income per capita in a county where the status is distressed and the unemployment rate is at 10.5%? ",
+        "context": "CREATE TABLE table_22815568_3 (market_income_per_capita VARCHAR, status VARCHAR, unemployment_rate VARCHAR)",
+        "gold": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"Distressed\" AND unemployment_rate = \"10.5%\"",
+        "pred": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = 'distressed' AND unemployment_rate = '10.5%'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "What is Date, when Opponent in Final is \"Guy Forget\"?",
+        "context": "CREATE TABLE table_name_64 (date VARCHAR, opponent_in_final VARCHAR)",
+        "gold": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"guy forget\"",
+        "pred": "SELECT date FROM table_name_64 WHERE opponent_in_final = 'Guy Forget'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Name the time for saturday 4 march 1995",
+        "context": "CREATE TABLE table_16388047_1 (time VARCHAR, date VARCHAR)",
+        "gold": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday 4 March 1995\"",
+        "pred": "Saturday, March 4, 1995, is represented by the time \"06:00\" in the table.",
+        "exact_match": false,
+        "similarity": 0.2754
+      },
+      {
+        "question": "What was the lowest win% with an away score of 3-2 in 2011 season?",
+        "context": "CREATE TABLE table_name_53 (win__percentage INTEGER, away VARCHAR, season VARCHAR)",
+        "gold": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = \"2011\"",
+        "pred": "SELECT MIN(win_percentage) AS min_win_percent FROM table_name_53 WHERE away = '3-2' AND season = '2011'",
+        "exact_match": false,
+        "similarity": 0.8876
+      },
+      {
+        "question": "how many division  did not qualify for u.s. open cup in 2003",
+        "context": "CREATE TABLE table_1046170_5 (division VARCHAR, us_open_cup VARCHAR, year VARCHAR)",
+        "gold": "SELECT division FROM table_1046170_5 WHERE us_open_cup = \"Did Not Qualify\" AND year = 2003",
+        "pred": "SELECT COUNT(DISTINCT division) FROM table_1046170_5 WHERE YEAR = '2003' AND US_OPEN_CUP NOT IN ('Division 1', 'Division 2')",
+        "exact_match": false,
+        "similarity": 0.6146
+      },
+      {
+        "question": "What album is 4:53 long?",
+        "context": "CREATE TABLE table_name_74 (album VARCHAR, length VARCHAR)",
+        "gold": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+        "pred": "album VARCHAR",
+        "exact_match": false,
+        "similarity": 0.2812
+      },
+      {
+        "question": "What are the formats associated with the Atlantic Records label, catalog number 512336?",
+        "context": "CREATE TABLE table_name_15 (format_s_ VARCHAR, label VARCHAR, catalog VARCHAR)",
+        "gold": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+        "pred": "SELECT format_s_ FROM table_name_15 WHERE label = 'Atlantic Records' AND catalog = '512336'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Name the number of naming for anomic aphasia",
+        "context": "CREATE TABLE table_2088_1 (naming VARCHAR, type_of_aphasia VARCHAR)",
+        "gold": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic aphasia\"",
+        "pred": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = 'Anomic'",
+        "exact_match": false,
+        "similarity": 0.9444
+      },
+      {
+        "question": "What was the Result F–A on 21 February 2009, when the league position was 1st?",
+        "context": "CREATE TABLE table_name_55 (result_f_a VARCHAR, league_position VARCHAR, date VARCHAR)",
+        "gold": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+        "pred": "SELECT result_f_a FROM table_name_55 WHERE date = '2009-02-21' AND league_position = '1st'",
+        "exact_match": false,
+        "similarity": 0.7191
+      },
+      {
+        "question": "What is position does Dan O'Sullivan play?",
+        "context": "CREATE TABLE table_name_58 (position VARCHAR, player VARCHAR)",
+        "gold": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+        "pred": "Dan O'Sullivan plays as center.",
+        "exact_match": false,
+        "similarity": 0.2947
+      },
+      {
+        "question": "Name the traditional for  屏南县",
+        "context": "CREATE TABLE table_2013618_1 (traditional VARCHAR, simplified VARCHAR)",
+        "gold": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+        "pred": "traditional 屏南县",
+        "exact_match": false,
+        "similarity": 0.3896
+      },
+      {
+        "question": "Name the district for hugh glasgow",
+        "context": "CREATE TABLE table_2668352_14 (district VARCHAR, incumbent VARCHAR)",
+        "gold": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+        "pred": "district of glasgow",
+        "exact_match": false,
+        "similarity": 0.4138
+      },
+      {
+        "question": "Name the being qualities for having things of friendships, family, relationships with nature",
+        "context": "CREATE TABLE table_name_20 (being__qualities_ VARCHAR, having__things_ VARCHAR)",
+        "gold": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+        "pred": "being__qualities_ friendship relationships nature",
+        "exact_match": false,
+        "similarity": 0.5963
+      },
+      {
+        "question": "which number lists the production code as 2j5809",
+        "context": "CREATE TABLE table_27403436_1 (no VARCHAR, production_code VARCHAR)",
+        "gold": "SELECT no FROM table_27403436_1 WHERE production_code = \"2J5809\"",
+        "pred": "SELECT no FROM table_27403436_1 WHERE production_code = '2j5809'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "What is listed under try bonus when listed under Tries for is tries for?",
+        "context": "CREATE TABLE table_13399573_3 (try_bonus VARCHAR)",
+        "gold": "SELECT try_bonus FROM table_13399573_3 WHERE \"tries_for\" = \"tries_for\"",
+        "pred": "try_bonus",
+        "exact_match": false,
+        "similarity": 0.2338
+      },
+      {
+        "question": "which championship had arantxa sánchez vicario todd woodbridge as opponents in the final ",
+        "context": "CREATE TABLE table_1918850_2 (championship VARCHAR, opponents_in_the_final VARCHAR)",
+        "gold": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+        "pred": "championship 2014",
+        "exact_match": false,
+        "similarity": 0.2188
+      },
+      {
+        "question": "What is the highest tonnage of the ship from norway?",
+        "context": "CREATE TABLE table_name_71 (tonnage INTEGER, nationality VARCHAR)",
+        "gold": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+        "pred": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = 'Norway'",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "What was the date of the game where Esteban Paredes scored 2 goals?",
+        "context": "CREATE TABLE table_name_62 (date VARCHAR, goal VARCHAR)",
+        "gold": "SELECT date FROM table_name_62 WHERE goal = 2",
+        "pred": "1987-05-30",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "What is the Away team with Newcastle United as the Home team?",
+        "context": "CREATE TABLE table_name_42 (away_team VARCHAR, home_team VARCHAR)",
+        "gold": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+        "pred": "away_team newcastle united",
+        "exact_match": false,
+        "similarity": 0.5417
+      },
+      {
+        "question": "what was the competitoin where the opponent is sheffield scimitars?",
+        "context": "CREATE TABLE table_17120964_9 (competition VARCHAR, opponent VARCHAR)",
+        "gold": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+        "pred": "competition AS 'Premier League', opponent AS 'Sheffield Scimitars'",
+        "exact_match": false,
+        "similarity": 0.6479
+      },
+      {
+        "question": "Which Circuit has a Winning Driver of hans-joachim stuck, and a Round of 3?",
+        "context": "CREATE TABLE table_name_74 (circuit VARCHAR, winning_driver VARCHAR, round VARCHAR)",
+        "gold": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = 3",
+        "pred": "circuit hans-hanselmo",
+        "exact_match": false,
+        "similarity": 0.3148
+      },
+      {
+        "question": "What is the capacity of the mine that is operated by Cyprus Amax minerals?",
+        "context": "CREATE TABLE table_name_83 (capacity__thousands_of_metric_tons_ VARCHAR, operator VARCHAR)",
+        "gold": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+        "pred": "capacity__thousands_of_metric_tons_ 10",
+        "exact_match": false,
+        "similarity": 0.5255
+      },
+      {
+        "question": "Who was the Partner in the Algiers 2, Algeria Tournament?",
+        "context": "CREATE TABLE table_name_2 (partner VARCHAR, tournament VARCHAR)",
+        "gold": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algeria\"",
+        "pred": "partner ALGERSHAWKIN",
+        "exact_match": false,
+        "similarity": 0.3146
+      },
+      {
+        "question": "WHAT kind of No Result has Wins smaller than 2, and Losses larger than 1?",
+        "context": "CREATE TABLE table_name_2 (no_result VARCHAR, wins VARCHAR, losses VARCHAR)",
+        "gold": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+        "pred": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Who did the Rangers play in a game that was later than 72 when the team record was 39-27-9?",
+        "context": "CREATE TABLE table_name_93 (opponent VARCHAR, game VARCHAR, record VARCHAR)",
+        "gold": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+        "pred": "rangers, game 108",
+        "exact_match": false,
+        "similarity": 0.2353
+      },
+      {
+        "question": "In game 73, what were the total number of high assists?",
+        "context": "CREATE TABLE table_28768469_10 (high_assists VARCHAR, game VARCHAR)",
+        "gold": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = 73",
+        "pred": "5",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "when deland is the fcsl team and 2008 is the year played who is the mlb team?",
+        "context": "CREATE TABLE table_18373863_2 (mlb_team VARCHAR, years_played VARCHAR, fcsl_team VARCHAR)",
+        "gold": "SELECT mlb_team FROM table_18373863_2 WHERE years_played = \"2008\" AND fcsl_team = \"DeLand\"",
+        "pred": "mlb_team: dandelion FCSL",
+        "exact_match": false,
+        "similarity": 0.3273
+      },
+      {
+        "question": "what is the total number of kickoff [a ] where week is week",
+        "context": "CREATE TABLE table_11406866_2 (a_ VARCHAR, kickoff_ VARCHAR)",
+        "gold": "SELECT COUNT(kickoff_)[a_] FROM table_11406866_2 WHERE \"week\" = \"week\"",
+        "pred": "SELECT COUNT(*) FROM `table_11406866_2` WHERE `a_` = 'week' AND `kickoff_` IS NOT NULL",
+        "exact_match": false,
+        "similarity": 0.649
+      },
+      {
+        "question": "What position did he finish in 1987?",
+        "context": "CREATE TABLE table_2387790_2 (position VARCHAR, year VARCHAR)",
+        "gold": "SELECT position FROM table_2387790_2 WHERE year = 1987",
+        "pred": "footballer",
+        "exact_match": false,
+        "similarity": 0.0968
+      },
+      {
+        "question": "What was Gary Player's highest total when his To par was over 15?",
+        "context": "CREATE TABLE table_name_41 (total INTEGER, player VARCHAR, to_par VARCHAR)",
+        "gold": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+        "pred": "SELECT MAX(total) AS max_total FROM table_name_41 WHERE player = 'Gary Player' AND to_par > 15",
+        "exact_match": false,
+        "similarity": 0.9212
+      },
+      {
+        "question": "What is the total sum of 50m splits for josefin lillhage in lanes above 8?",
+        "context": "CREATE TABLE table_name_24 (split__50m_ INTEGER, name VARCHAR, lane VARCHAR)",
+        "gold": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+        "pred": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = 'Josefin Lillhage' AND lane > 8",
+        "exact_match": true,
+        "similarity": 1.0
+      },
+      {
+        "question": "Where has Jimmy Demaret as a player?",
+        "context": "CREATE TABLE table_name_94 (place VARCHAR, player VARCHAR)",
+        "gold": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+        "pred": "SELECT player FROM table_name_94 WHERE player = 'Jimmy Demaret'",
+        "exact_match": false,
+        "similarity": 0.9752
+      },
+      {
+        "question": "What is the total number of Goals scored that has more than 45 Points?",
+        "context": "CREATE TABLE table_name_74 (goals_scored VARCHAR, points INTEGER)",
+        "gold": "SELECT COUNT(goals_scored) FROM table_name_74 WHERE points > 45",
+        "pred": "SELECT SUM(points) FROM table_name_74 WHERE points > 45",
+        "exact_match": false,
+        "similarity": 0.8214
+      },
+      {
+        "question": "How did the game number 50 end?",
+        "context": "CREATE TABLE table_23248940_9 (score VARCHAR, game VARCHAR)",
+        "gold": "SELECT score FROM table_23248940_9 WHERE game = 50",
+        "pred": "score 50",
+        "exact_match": false,
+        "similarity": 0.2857
+      },
+      {
+        "question": "What player has a round larger than 2, and position of (d)?",
+        "context": "CREATE TABLE table_name_20 (player VARCHAR, round VARCHAR, position VARCHAR)",
+        "gold": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"(d)\"",
+        "pred": "SELECT player FROM table_name_20 WHERE round > 2 AND position = 'D'",
+        "exact_match": false,
+        "similarity": 0.9844
+      },
+      {
+        "question": "What was sweden's score in T9 place?",
+        "context": "CREATE TABLE table_name_27 (score VARCHAR, place VARCHAR, country VARCHAR)",
+        "gold": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+        "pred": "Sweden's score in T9 place was 0-3.",
+        "exact_match": false,
+        "similarity": 0.1346
+      },
+      {
+        "question": "What was the Attendance on November 26?",
+        "context": "CREATE TABLE table_name_98 (attendance VARCHAR, date VARCHAR)",
+        "gold": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+        "pred": "1035",
+        "exact_match": false,
+        "similarity": 0.0
+      },
+      {
+        "question": "Who finished in third place when the winner was Karina Bacchi? ",
+        "context": "CREATE TABLE table_25214321_1 (third_place VARCHAR, winner VARCHAR)",
+        "gold": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+        "pred": "winner = \"Karina Bacchi\" AND third_place = \"Third Place\"",
+        "exact_match": false,
+        "similarity": 0.3636
+      },
+      {
+        "question": "When is the date of appointment when the position in table is 16?",
+        "context": "CREATE TABLE table_27383390_4 (date_of_appointment VARCHAR, position_in_table VARCHAR)",
+        "gold": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = 16",
+        "pred": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = '16'",
+        "exact_match": false,
+        "similarity": 0.9868
+      },
+      {
+        "question": "What is Date, when Outcome is \"Winner\", and when Opponents is \"Paul Haarhuis Sandon Stolle\"?",
+        "context": "CREATE TABLE table_name_48 (date VARCHAR, outcome VARCHAR, opponents VARCHAR)",
+        "gold": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+        "pred": "SELECT date, outcome, opponents FROM table_name_48 WHERE outcome = 'Winner' AND opponents = 'Paul Haarhuis Sandon Stolle'",
+        "exact_match": false,
+        "similarity": 0.9151
+      },
+      {
+        "question": "What is the location of the Saints having 1979- as Years in GFL?",
+        "context": "CREATE TABLE table_name_37 (location VARCHAR, years_in_gfl VARCHAR, nickname VARCHAR)",
+        "gold": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979-\" AND nickname = \"saints\"",
+        "pred": "Saints, with 1979 being their first year in the NFL, has been located at New Orleans, LA.",
+        "exact_match": false,
+        "similarity": 0.071
+      },
+      {
+        "question": "Who was the Team that was played against on February 24 and a game after game 55?",
+        "context": "CREATE TABLE table_name_61 (team VARCHAR, game VARCHAR, date VARCHAR)",
+        "gold": "SELECT team FROM table_name_61 WHERE game > 55 AND date = \"february 24\"",
+        "pred": "team vs. team",
+        "exact_match": false,
+        "similarity": 0.25
+      },
+      {
+        "question": "Who is the monarch with the heir thado minsaw?",
+        "context": "CREATE TABLE table_26460435_8 (monarch VARCHAR, heir VARCHAR)",
+        "gold": "SELECT monarch FROM table_26460435_8 WHERE heir = \"Thado Minsaw\"",
+        "pred": "The monarch with the heir Thado Minsa is King George VI of the United Kingdom.",
+        "exact_match": false,
+        "similarity": 0.4286
+      }
+    ]
+  },
+  "experiments": [
+    {
+      "train": {
+        "name": "A_lr2e-4_r8_ep1",
+        "lr": 0.0002,
+        "r": 8,
+        "lora_alpha": 16,
+        "epochs": 1,
+        "n_train": 1000,
+        "batch_efetivo": 16,
+        "trainable_params": 4399104,
+        "train_loss": 0.1147,
+        "train_time_s": 440.8,
+        "peak_vram_gb": 2.77,
+        "precision": "fp32",
+        "gradient_checkpointing": true,
+        "loss_history": [
+          {
+            "step": 10,
+            "loss": 0.23949484825134276
+          },
+          {
+            "step": 20,
+            "loss": 0.1059368371963501
+          },
+          {
+            "step": 30,
+            "loss": 0.07900007963180541
+          },
+          {
+            "step": 40,
+            "loss": 0.08575010299682617
+          },
+          {
+            "step": 50,
+            "loss": 0.09422041177749634
+          },
+          {
+            "step": 60,
+            "loss": 0.08759502172470093
+          }
+        ],
+        "adapter_dir": "outputs\\A_lr2e-4_r8_ep1"
+      },
+      "eval": {
+        "exact_match": 0.57,
+        "similarity": 0.961,
+        "eval_time_s": 25.5,
+        "ms_por_exemplo": 255.0,
+        "n_test": 100
+      },
+      "rows": [
+        {
+          "question": "When Essendon played away; where did they play?",
+          "context": "CREATE TABLE table_name_50 (venue VARCHAR, away_team VARCHAR)",
+          "gold": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+          "pred": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the lowest numbered game against Phoenix with a record of 29-17?",
+          "context": "CREATE TABLE table_name_61 (game INTEGER, opponent VARCHAR, record VARCHAR)",
+          "gold": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+          "pred": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who did the Texan's play on Week 4?",
+          "context": "CREATE TABLE table_name_37 (opponent VARCHAR, week VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_37 WHERE week = \"4\"",
+          "pred": "SELECT opponent FROM table_name_37 WHERE week = \"4\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Points have Touchdowns larger than 0, and an Extra points smaller than 0?",
+          "context": "CREATE TABLE table_name_70 (points INTEGER, touchdowns VARCHAR, extra_points VARCHAR)",
+          "gold": "SELECT SUM(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+          "pred": "SELECT MAX(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+          "exact_match": false,
+          "similarity": 0.973
+        },
+        {
+          "question": "What is the name of the player who is Sco and moving to greenock morton in the summer?",
+          "context": "CREATE TABLE table_name_83 (name VARCHAR, moving_to VARCHAR, nat VARCHAR, transfer_window VARCHAR)",
+          "gold": "SELECT name FROM table_name_83 WHERE nat = \"sco\" AND transfer_window = \"summer\" AND moving_to = \"greenock morton\"",
+          "pred": "SELECT name FROM table_name_83 WHERE moving_to = \"sco\" AND nat = \"greenwich\" AND transfer_window = \"summer\"",
+          "exact_match": false,
+          "similarity": 0.7115
+        },
+        {
+          "question": "Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?",
+          "context": "CREATE TABLE votes (contestant_number VARCHAR); CREATE TABLE contestants (contestant_number VARCHAR, contestant_name VARCHAR)",
+          "gold": "SELECT T1.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY COUNT(*) LIMIT 1",
+          "pred": "SELECT T1.contestant_number, T2.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY COUNT(*) LIMIT 1",
+          "exact_match": false,
+          "similarity": 0.9946
+        },
+        {
+          "question": "Which venue had the result 7-1?",
+          "context": "CREATE TABLE table_name_50 (venue VARCHAR, result VARCHAR)",
+          "gold": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+          "pred": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What did the tournament that got an A in 1945 get in 1949?",
+          "context": "CREATE TABLE table_name_22 (Id VARCHAR)",
+          "gold": "SELECT 1949 FROM table_name_22 WHERE 1945 = \"a\"",
+          "pred": "SELECT 1949 AS year FROM table_name_22 WHERE Id = \"1945\"",
+          "exact_match": false,
+          "similarity": 0.8485
+        },
+        {
+          "question": "Find the states where have the colleges whose enrollments are less than the largest size.",
+          "context": "CREATE TABLE college (state VARCHAR, enr INTEGER)",
+          "gold": "SELECT DISTINCT state FROM college WHERE enr < (SELECT MAX(enr) FROM college)",
+          "pred": "SELECT state FROM college WHERE enr < (SELECT MAX(enrollments) FROM college)",
+          "exact_match": false,
+          "similarity": 0.8844
+        },
+        {
+          "question": "What is the name of the episode that had 9.89 million U.S. viewers?",
+          "context": "CREATE TABLE table_24648983_1 (title VARCHAR, us_viewers__million_ VARCHAR)",
+          "gold": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+          "pred": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What are the names of the workshop groups that have bookings with status code \"stop\"?",
+          "context": "CREATE TABLE Bookings (Workshop_Group_ID VARCHAR, Status_Code VARCHAR); CREATE TABLE Drama_Workshop_Groups (Store_Name VARCHAR, Workshop_Group_ID VARCHAR)",
+          "gold": "SELECT T2.Store_Name FROM Bookings AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T1.Status_Code = \"stop\"",
+          "pred": "SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Bookings AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T2.Status_Code = \"Stop\"",
+          "exact_match": false,
+          "similarity": 0.8493
+        },
+        {
+          "question": "Where was the opponent Germany?",
+          "context": "CREATE TABLE table_name_96 (location VARCHAR, opponenent VARCHAR)",
+          "gold": "SELECT location FROM table_name_96 WHERE opponenent = \"germany\"",
+          "pred": "SELECT location FROM table_name_96 WHERE opponent = \"germany\"",
+          "exact_match": false,
+          "similarity": 0.9833
+        },
+        {
+          "question": "Name the candidates for result of lost renomination democratic loss",
+          "context": "CREATE TABLE table_1342149_24 (candidates VARCHAR, result VARCHAR)",
+          "gold": "SELECT candidates FROM table_1342149_24 WHERE result = \"Lost renomination Democratic loss\"",
+          "pred": "SELECT candidates FROM table_1342149_24 WHERE result = \"Lost Renomination\" AND result = \"Democratic Loss\"",
+          "exact_match": false,
+          "similarity": 0.9312
+        },
+        {
+          "question": "What is the number of party in the arkansas 1 district",
+          "context": "CREATE TABLE table_1341930_5 (party VARCHAR, district VARCHAR)",
+          "gold": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+          "pred": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many alt names does 1964-011a have?",
+          "context": "CREATE TABLE table_12141496_1 (alt_name VARCHAR, id VARCHAR)",
+          "gold": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011A\"",
+          "pred": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011a\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who is the opponent of the game played on November 20, 1995?",
+          "context": "CREATE TABLE table_name_66 (opponent VARCHAR, date VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+          "pred": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the position of tickets sold/available when the sellout is 82%?",
+          "context": "CREATE TABLE table_16331025_2 (tickets_sold___available VARCHAR, sellout___percentage_ VARCHAR)",
+          "gold": "SELECT COUNT(tickets_sold___available) FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+          "pred": "SELECT tickets_sold___available FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+          "exact_match": false,
+          "similarity": 0.9556
+        },
+        {
+          "question": "Which College/Junior/Club Team (League) did the player in round 6 play for?",
+          "context": "CREATE TABLE table_name_98 (college_junior_club_team__league_ VARCHAR, round VARCHAR)",
+          "gold": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+          "pred": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many in the introduced section had Fokker as a manufacturer, a quantity of 5, and retired later than 1999?",
+          "context": "CREATE TABLE table_name_94 (introduced INTEGER, retired VARCHAR, manufacturer VARCHAR, quantity VARCHAR)",
+          "gold": "SELECT SUM(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = 5 AND retired > 1999",
+          "pred": "SELECT COUNT(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = \"5\" AND introduced > 1999",
+          "exact_match": false,
+          "similarity": 0.9179
+        },
+        {
+          "question": "Where was the audition venue where Peninha was the guest fourth judge?",
+          "context": "CREATE TABLE table_27615445_1 (audition_venue VARCHAR, guest_fourth_judge VARCHAR)",
+          "gold": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+          "pred": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the runner-up in the Memorial Tournament?",
+          "context": "CREATE TABLE table_1602858_1 (runner_s__up VARCHAR, tournament VARCHAR)",
+          "gold": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial tournament\"",
+          "pred": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial\"",
+          "exact_match": false,
+          "similarity": 0.9252
+        },
+        {
+          "question": "What is the number of bonus points when there are 2 drawn and the points against is 599?",
+          "context": "CREATE TABLE table_name_83 (bonus_points VARCHAR, drawn VARCHAR, points_against VARCHAR)",
+          "gold": "SELECT bonus_points FROM table_name_83 WHERE drawn = \"2\" AND points_against = \"599\"",
+          "pred": "SELECT COUNT(bonus_points) FROM table_name_83 WHERE drawn = \"2\" AND points_against = \"599\"",
+          "exact_match": false,
+          "similarity": 0.9512
+        },
+        {
+          "question": "Which game was a Platformer?",
+          "context": "CREATE TABLE table_name_90 (game VARCHAR, genre VARCHAR)",
+          "gold": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+          "pred": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the individual in the event of 1998 Pokljuka?",
+          "context": "CREATE TABLE table_name_33 (individual VARCHAR, event VARCHAR)",
+          "gold": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+          "pred": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What's the average draft pick number from Carson-Newman College before Round 7?",
+          "context": "CREATE TABLE table_name_21 (pick__number INTEGER, college VARCHAR, round VARCHAR)",
+          "gold": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman\" AND round < 7",
+          "pred": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman\" AND round < 7",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the spouse of the consort who was born as rania al yassin?",
+          "context": "CREATE TABLE table_name_27 (spouse_to VARCHAR, born_as VARCHAR)",
+          "gold": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+          "pred": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many figures for wickets when the strike rate is 54.0?",
+          "context": "CREATE TABLE table_19662262_6 (wickets VARCHAR, strike_rate VARCHAR)",
+          "gold": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+          "pred": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who's the Communist ticket with an American Labor ticket of joseph v. o'leary?",
+          "context": "CREATE TABLE table_name_49 (communist_ticket VARCHAR, american_labor_ticket VARCHAR)",
+          "gold": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+          "pred": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the HDI 2011 of the country with a DI 2011 of 7.63?",
+          "context": "CREATE TABLE table_name_54 (hdi_2011 VARCHAR, di_2011 VARCHAR)",
+          "gold": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+          "pred": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How much Against has Draws of 2, and Losses smaller than 4?",
+          "context": "CREATE TABLE table_name_17 (against INTEGER, draws VARCHAR, losses VARCHAR)",
+          "gold": "SELECT SUM(against) FROM table_name_17 WHERE draws = 2 AND losses < 4",
+          "pred": "SELECT MAX(against) FROM table_name_17 WHERE draws = \"2\" AND losses < 4",
+          "exact_match": false,
+          "similarity": 0.9538
+        },
+        {
+          "question": "What was Galatasaray score when when he won in 1990 and Trabzonspor was the runner-up?",
+          "context": "CREATE TABLE table_name_24 (score VARCHAR, year VARCHAR, winners VARCHAR, runners_up VARCHAR)",
+          "gold": "SELECT score FROM table_name_24 WHERE winners = \"galatasaray\" AND runners_up = \"trabzonspor\" AND year = 1990",
+          "pred": "SELECT score FROM table_name_24 WHERE year = \"1990\" AND winners = \"galatasaray\" AND runners_up = \"trabzonspor\"",
+          "exact_match": false,
+          "similarity": 0.8544
+        },
+        {
+          "question": "Who was the runner-up of the competition played at Minikahda Club?",
+          "context": "CREATE TABLE table_name_55 (runner_up VARCHAR, venue VARCHAR)",
+          "gold": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+          "pred": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the catalog number for the Grilled Cheese label?",
+          "context": "CREATE TABLE table_name_33 (catalog VARCHAR, label VARCHAR)",
+          "gold": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+          "pred": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which opponent had the result of W 24-14?",
+          "context": "CREATE TABLE table_name_64 (opponent VARCHAR, result VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+          "pred": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the newest season?",
+          "context": "CREATE TABLE table_2140071_7 (season INTEGER)",
+          "gold": "SELECT MAX(season) FROM table_2140071_7",
+          "pred": "SELECT MAX(season) FROM table_2140071_7",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Surface has an Opponent(s) of anna-lena grönefeld tatjana malek?",
+          "context": "CREATE TABLE table_name_8 (surface VARCHAR, opponent_s_ VARCHAR)",
+          "gold": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld tatjana malek\"",
+          "pred": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld tajana malek\"",
+          "exact_match": false,
+          "similarity": 0.9942
+        },
+        {
+          "question": "In what TV season did the 3rd season air?",
+          "context": "CREATE TABLE table_1348989_2 (TV VARCHAR, season VARCHAR)",
+          "gold": "SELECT TV AS season FROM table_1348989_2 WHERE season = \"3rd\"",
+          "pred": "SELECT TV FROM table_1348989_2 WHERE season = \"3\"",
+          "exact_match": false,
+          "similarity": 0.8868
+        },
+        {
+          "question": "Who ran the fastest lap in the team that competed in Zolder, in which Ferrari was the Constructor?",
+          "context": "CREATE TABLE table_name_39 (fastest_lap VARCHAR, constructor VARCHAR, location VARCHAR)",
+          "gold": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+          "pred": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the NBA draft status for Northeast High School?",
+          "context": "CREATE TABLE table_name_7 (nba_draft VARCHAR, school VARCHAR)",
+          "gold": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high school\"",
+          "pred": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high\"",
+          "exact_match": false,
+          "similarity": 0.9481
+        },
+        {
+          "question": "What is the high Population (total) from 1976 with a (Barcaldine) smaller than 1,780?",
+          "context": "CREATE TABLE table_name_96 (population__total_ INTEGER, year VARCHAR, _barcaldine_ VARCHAR)",
+          "gold": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = 1976 AND _barcaldine_ < 1 OFFSET 780",
+          "pred": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = \"1976\" AND _barcaldine_ < 1 OFFSET 780",
+          "exact_match": false,
+          "similarity": 0.9895
+        },
+        {
+          "question": "What 1953 has 2 as a 1949, and 3 as 1952?",
+          "context": "CREATE TABLE table_name_48 (Id VARCHAR)",
+          "gold": "SELECT 1953 FROM table_name_48 WHERE 1949 = \"2\" AND 1952 = \"3\"",
+          "pred": "SELECT 1953 FROM table_name_48 WHERE 2 = 1949 AND 3 = 1952",
+          "exact_match": false,
+          "similarity": 0.8929
+        },
+        {
+          "question": "What is the total number of losses for the over 30 games played?",
+          "context": "CREATE TABLE table_name_50 (losses VARCHAR, played INTEGER)",
+          "gold": "SELECT COUNT(losses) FROM table_name_50 WHERE played > 30",
+          "pred": "SELECT COUNT(losses) FROM table_name_50 WHERE played > 30",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Show names for artists without any exhibition.",
+          "context": "CREATE TABLE artist (name VARCHAR, artist_id VARCHAR); CREATE TABLE exhibition (name VARCHAR, artist_id VARCHAR)",
+          "gold": "SELECT name FROM artist WHERE NOT artist_id IN (SELECT artist_id FROM exhibition)",
+          "pred": "SELECT name FROM artist EXCEPT SELECT T1.name FROM artist AS T1 JOIN exhibition AS T2 ON T1.artist_id = T2.artist_id GROUP BY T1.name HAVING COUNT(*) = 0",
+          "exact_match": false,
+          "similarity": 0.4803
+        },
+        {
+          "question": "What are the countries of mountains with height bigger than 5000?",
+          "context": "CREATE TABLE mountain (Country VARCHAR, Height INTEGER)",
+          "gold": "SELECT Country FROM mountain WHERE Height > 5000",
+          "pred": "SELECT Country FROM mountain WHERE Height > 5000",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the highest Money ( £ ), when Player is \"Peter Hedblom\"?",
+          "context": "CREATE TABLE table_name_95 (money___ INTEGER, player VARCHAR)",
+          "gold": "SELECT MAX(money___) AS £__ FROM table_name_95 WHERE player = \"peter hedblom\"",
+          "pred": "SELECT MAX(money_) FROM table_name_95 WHERE player = \"peter hedblom\"",
+          "exact_match": false,
+          "similarity": 0.9353
+        },
+        {
+          "question": "When was the appointment date for VFL Wolfsburg?",
+          "context": "CREATE TABLE table_name_72 (date_of_appointment VARCHAR, team VARCHAR)",
+          "gold": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+          "pred": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What language is the moviein that is on UMP movies network through Sky service?",
+          "context": "CREATE TABLE table_name_87 (language VARCHAR, network VARCHAR, genre VARCHAR, service VARCHAR)",
+          "gold": "SELECT language FROM table_name_87 WHERE genre = \"movies\" AND service = \"sky\" AND network = \"ump movies\"",
+          "pred": "SELECT language FROM table_name_87 WHERE network = \"ump movies\" AND service = \"sky\"",
+          "exact_match": false,
+          "similarity": 0.791
+        },
+        {
+          "question": "What Location has a Design flow (LPM) smaller than 1900, and a Construction Start of 2006 june?",
+          "context": "CREATE TABLE table_name_40 (location VARCHAR, design_flow__lpm_ VARCHAR, construction_start VARCHAR)",
+          "gold": "SELECT location FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = \"2006 june\"",
+          "pred": "SELECT location FROM table_name_40 WHERE design_flow_lpm_ < 1900 AND construction_start = \"june 2006\"",
+          "exact_match": false,
+          "similarity": 0.9436
+        },
+        {
+          "question": "What high definition television options are available for Italia 1?",
+          "context": "CREATE TABLE table_15887683_1 (hdtv VARCHAR, television_service VARCHAR)",
+          "gold": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+          "pred": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which suffix has the prefix of isothiocyanato- (-ncs)?",
+          "context": "CREATE TABLE table_name_17 (suffix VARCHAR, prefix VARCHAR)",
+          "gold": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato- (-ncs)\"",
+          "pred": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato-\"",
+          "exact_match": false,
+          "similarity": 0.9545
+        },
+        {
+          "question": "What is the enrollment at the school of Hamilton community?",
+          "context": "CREATE TABLE table_name_3 (enrollment INTEGER, school VARCHAR)",
+          "gold": "SELECT AVG(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+          "pred": "SELECT MAX(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+          "exact_match": false,
+          "similarity": 0.9726
+        },
+        {
+          "question": "What is the date of return for the program for the program \"Big Brother\"?",
+          "context": "CREATE TABLE table_29566606_11 (date_of_return VARCHAR, programme VARCHAR)",
+          "gold": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+          "pred": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "On what date was Patty Fendick an opponent?",
+          "context": "CREATE TABLE table_name_95 (date VARCHAR, opponent VARCHAR)",
+          "gold": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+          "pred": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What position did the player who was with the grizzlies from 2007-2009 play?",
+          "context": "CREATE TABLE table_name_89 (position VARCHAR, years_for_grizzlies VARCHAR)",
+          "gold": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+          "pred": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "When do all the researcher role staff start to work, and when do they stop working?",
+          "context": "CREATE TABLE Project_Staff (date_from VARCHAR, date_to VARCHAR, role_code VARCHAR)",
+          "gold": "SELECT date_from, date_to FROM Project_Staff WHERE role_code = 'researcher'",
+          "pred": "SELECT MIN(date_from), MAX(date_to) FROM Project_Staff WHERE role_code = \"RESEARCHER\"",
+          "exact_match": false,
+          "similarity": 0.9281
+        },
+        {
+          "question": "what is the analog type for wxmi?",
+          "context": "CREATE TABLE table_name_9 (analog VARCHAR, callsign VARCHAR)",
+          "gold": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+          "pred": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what's the record with result being w 21–7",
+          "context": "CREATE TABLE table_14951643_1 (record VARCHAR, result VARCHAR)",
+          "gold": "SELECT record FROM table_14951643_1 WHERE result = \"W 21–7\"",
+          "pred": "SELECT record FROM table_14951643_1 WHERE result = \"W 21–7\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the market income per capita in a county where the status is distressed and the unemployment rate is at 10.5%? ",
+          "context": "CREATE TABLE table_22815568_3 (market_income_per_capita VARCHAR, status VARCHAR, unemployment_rate VARCHAR)",
+          "gold": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"Distressed\" AND unemployment_rate = \"10.5%\"",
+          "pred": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"Distressed\" AND unemployment_rate = \"10.5%\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is Date, when Opponent in Final is \"Guy Forget\"?",
+          "context": "CREATE TABLE table_name_64 (date VARCHAR, opponent_in_final VARCHAR)",
+          "gold": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"guy forget\"",
+          "pred": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"guy forget\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the time for saturday 4 march 1995",
+          "context": "CREATE TABLE table_16388047_1 (time VARCHAR, date VARCHAR)",
+          "gold": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday 4 March 1995\"",
+          "pred": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday, April 4, 1995\"",
+          "exact_match": false,
+          "similarity": 0.8971
+        },
+        {
+          "question": "What was the lowest win% with an away score of 3-2 in 2011 season?",
+          "context": "CREATE TABLE table_name_53 (win__percentage INTEGER, away VARCHAR, season VARCHAR)",
+          "gold": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = \"2011\"",
+          "pred": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = 2011",
+          "exact_match": false,
+          "similarity": 0.9873
+        },
+        {
+          "question": "how many division  did not qualify for u.s. open cup in 2003",
+          "context": "CREATE TABLE table_1046170_5 (division VARCHAR, us_open_cup VARCHAR, year VARCHAR)",
+          "gold": "SELECT division FROM table_1046170_5 WHERE us_open_cup = \"Did Not Qualify\" AND year = 2003",
+          "pred": "SELECT COUNT(division) FROM table_1046170_5 WHERE us_open_cup = \"U.S. Open Cup\" AND year < 2003",
+          "exact_match": false,
+          "similarity": 0.7955
+        },
+        {
+          "question": "What album is 4:53 long?",
+          "context": "CREATE TABLE table_name_74 (album VARCHAR, length VARCHAR)",
+          "gold": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+          "pred": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What are the formats associated with the Atlantic Records label, catalog number 512336?",
+          "context": "CREATE TABLE table_name_15 (format_s_ VARCHAR, label VARCHAR, catalog VARCHAR)",
+          "gold": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+          "pred": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the number of naming for anomic aphasia",
+          "context": "CREATE TABLE table_2088_1 (naming VARCHAR, type_of_aphasia VARCHAR)",
+          "gold": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic aphasia\"",
+          "pred": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic Aphasia\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the Result F–A on 21 February 2009, when the league position was 1st?",
+          "context": "CREATE TABLE table_name_55 (result_f_a VARCHAR, league_position VARCHAR, date VARCHAR)",
+          "gold": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+          "pred": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is position does Dan O'Sullivan play?",
+          "context": "CREATE TABLE table_name_58 (position VARCHAR, player VARCHAR)",
+          "gold": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+          "pred": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the traditional for  屏南县",
+          "context": "CREATE TABLE table_2013618_1 (traditional VARCHAR, simplified VARCHAR)",
+          "gold": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+          "pred": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the district for hugh glasgow",
+          "context": "CREATE TABLE table_2668352_14 (district VARCHAR, incumbent VARCHAR)",
+          "gold": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+          "pred": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the being qualities for having things of friendships, family, relationships with nature",
+          "context": "CREATE TABLE table_name_20 (being__qualities_ VARCHAR, having__things_ VARCHAR)",
+          "gold": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+          "pred": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "which number lists the production code as 2j5809",
+          "context": "CREATE TABLE table_27403436_1 (no VARCHAR, production_code VARCHAR)",
+          "gold": "SELECT no FROM table_27403436_1 WHERE production_code = \"2J5809\"",
+          "pred": "SELECT no FROM table_27403436_1 WHERE production_code = \"2j5809\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is listed under try bonus when listed under Tries for is tries for?",
+          "context": "CREATE TABLE table_13399573_3 (try_bonus VARCHAR)",
+          "gold": "SELECT try_bonus FROM table_13399573_3 WHERE \"tries_for\" = \"tries_for\"",
+          "pred": "SELECT try_bonus FROM table_13399573_3 WHERE Tries = \"tries for\"",
+          "exact_match": false,
+          "similarity": 0.9385
+        },
+        {
+          "question": "which championship had arantxa sánchez vicario todd woodbridge as opponents in the final ",
+          "context": "CREATE TABLE table_1918850_2 (championship VARCHAR, opponents_in_the_final VARCHAR)",
+          "gold": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+          "pred": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the highest tonnage of the ship from norway?",
+          "context": "CREATE TABLE table_name_71 (tonnage INTEGER, nationality VARCHAR)",
+          "gold": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+          "pred": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the date of the game where Esteban Paredes scored 2 goals?",
+          "context": "CREATE TABLE table_name_62 (date VARCHAR, goal VARCHAR)",
+          "gold": "SELECT date FROM table_name_62 WHERE goal = 2",
+          "pred": "SELECT date FROM table_name_62 WHERE goal = \"esteban paredes\"",
+          "exact_match": false,
+          "similarity": 0.8235
+        },
+        {
+          "question": "What is the Away team with Newcastle United as the Home team?",
+          "context": "CREATE TABLE table_name_42 (away_team VARCHAR, home_team VARCHAR)",
+          "gold": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+          "pred": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what was the competitoin where the opponent is sheffield scimitars?",
+          "context": "CREATE TABLE table_17120964_9 (competition VARCHAR, opponent VARCHAR)",
+          "gold": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+          "pred": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Circuit has a Winning Driver of hans-joachim stuck, and a Round of 3?",
+          "context": "CREATE TABLE table_name_74 (circuit VARCHAR, winning_driver VARCHAR, round VARCHAR)",
+          "gold": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = 3",
+          "pred": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = \"3\"",
+          "exact_match": false,
+          "similarity": 0.9886
+        },
+        {
+          "question": "What is the capacity of the mine that is operated by Cyprus Amax minerals?",
+          "context": "CREATE TABLE table_name_83 (capacity__thousands_of_metric_tons_ VARCHAR, operator VARCHAR)",
+          "gold": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+          "pred": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the Partner in the Algiers 2, Algeria Tournament?",
+          "context": "CREATE TABLE table_name_2 (partner VARCHAR, tournament VARCHAR)",
+          "gold": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algeria\"",
+          "pred": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algerian\"",
+          "exact_match": false,
+          "similarity": 0.9928
+        },
+        {
+          "question": "WHAT kind of No Result has Wins smaller than 2, and Losses larger than 1?",
+          "context": "CREATE TABLE table_name_2 (no_result VARCHAR, wins VARCHAR, losses VARCHAR)",
+          "gold": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+          "pred": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who did the Rangers play in a game that was later than 72 when the team record was 39-27-9?",
+          "context": "CREATE TABLE table_name_93 (opponent VARCHAR, game VARCHAR, record VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+          "pred": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "In game 73, what were the total number of high assists?",
+          "context": "CREATE TABLE table_28768469_10 (high_assists VARCHAR, game VARCHAR)",
+          "gold": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = 73",
+          "pred": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = \"73\"",
+          "exact_match": false,
+          "similarity": 0.9841
+        },
+        {
+          "question": "when deland is the fcsl team and 2008 is the year played who is the mlb team?",
+          "context": "CREATE TABLE table_18373863_2 (mlb_team VARCHAR, years_played VARCHAR, fcsl_team VARCHAR)",
+          "gold": "SELECT mlb_team FROM table_18373863_2 WHERE years_played = \"2008\" AND fcsl_team = \"DeLand\"",
+          "pred": "SELECT mlb_team FROM table_18373863_2 WHERE fcsl_team = \"Deland\" AND years_played = 2008",
+          "exact_match": false,
+          "similarity": 0.7294
+        },
+        {
+          "question": "what is the total number of kickoff [a ] where week is week",
+          "context": "CREATE TABLE table_11406866_2 (a_ VARCHAR, kickoff_ VARCHAR)",
+          "gold": "SELECT COUNT(kickoff_)[a_] FROM table_11406866_2 WHERE \"week\" = \"week\"",
+          "pred": "SELECT COUNT(a_) FROM table_11406866_2 WHERE kickoff_ = \"Week\"",
+          "exact_match": false,
+          "similarity": 0.8031
+        },
+        {
+          "question": "What position did he finish in 1987?",
+          "context": "CREATE TABLE table_2387790_2 (position VARCHAR, year VARCHAR)",
+          "gold": "SELECT position FROM table_2387790_2 WHERE year = 1987",
+          "pred": "SELECT position FROM table_2387790_2 WHERE year = \"1987\"",
+          "exact_match": false,
+          "similarity": 0.9811
+        },
+        {
+          "question": "What was Gary Player's highest total when his To par was over 15?",
+          "context": "CREATE TABLE table_name_41 (total INTEGER, player VARCHAR, to_par VARCHAR)",
+          "gold": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+          "pred": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the total sum of 50m splits for josefin lillhage in lanes above 8?",
+          "context": "CREATE TABLE table_name_24 (split__50m_ INTEGER, name VARCHAR, lane VARCHAR)",
+          "gold": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+          "pred": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Where has Jimmy Demaret as a player?",
+          "context": "CREATE TABLE table_name_94 (place VARCHAR, player VARCHAR)",
+          "gold": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+          "pred": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the total number of Goals scored that has more than 45 Points?",
+          "context": "CREATE TABLE table_name_74 (goals_scored VARCHAR, points INTEGER)",
+          "gold": "SELECT COUNT(goals_scored) FROM table_name_74 WHERE points > 45",
+          "pred": "SELECT COUNT(goals_scored) FROM table_name_74 WHERE points > 45",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How did the game number 50 end?",
+          "context": "CREATE TABLE table_23248940_9 (score VARCHAR, game VARCHAR)",
+          "gold": "SELECT score FROM table_23248940_9 WHERE game = 50",
+          "pred": "SELECT score FROM table_23248940_9 WHERE game = \"50\"",
+          "exact_match": false,
+          "similarity": 0.9796
+        },
+        {
+          "question": "What player has a round larger than 2, and position of (d)?",
+          "context": "CREATE TABLE table_name_20 (player VARCHAR, round VARCHAR, position VARCHAR)",
+          "gold": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"(d)\"",
+          "pred": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"d\"",
+          "exact_match": false,
+          "similarity": 0.9844
+        },
+        {
+          "question": "What was sweden's score in T9 place?",
+          "context": "CREATE TABLE table_name_27 (score VARCHAR, place VARCHAR, country VARCHAR)",
+          "gold": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+          "pred": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the Attendance on November 26?",
+          "context": "CREATE TABLE table_name_98 (attendance VARCHAR, date VARCHAR)",
+          "gold": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+          "pred": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who finished in third place when the winner was Karina Bacchi? ",
+          "context": "CREATE TABLE table_25214321_1 (third_place VARCHAR, winner VARCHAR)",
+          "gold": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+          "pred": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "When is the date of appointment when the position in table is 16?",
+          "context": "CREATE TABLE table_27383390_4 (date_of_appointment VARCHAR, position_in_table VARCHAR)",
+          "gold": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = 16",
+          "pred": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = \"16\"",
+          "exact_match": false,
+          "similarity": 0.9868
+        },
+        {
+          "question": "What is Date, when Outcome is \"Winner\", and when Opponents is \"Paul Haarhuis Sandon Stolle\"?",
+          "context": "CREATE TABLE table_name_48 (date VARCHAR, outcome VARCHAR, opponents VARCHAR)",
+          "gold": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+          "pred": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the location of the Saints having 1979- as Years in GFL?",
+          "context": "CREATE TABLE table_name_37 (location VARCHAR, years_in_gfl VARCHAR, nickname VARCHAR)",
+          "gold": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979-\" AND nickname = \"saints\"",
+          "pred": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979\"",
+          "exact_match": false,
+          "similarity": 0.8392
+        },
+        {
+          "question": "Who was the Team that was played against on February 24 and a game after game 55?",
+          "context": "CREATE TABLE table_name_61 (team VARCHAR, game VARCHAR, date VARCHAR)",
+          "gold": "SELECT team FROM table_name_61 WHERE game > 55 AND date = \"february 24\"",
+          "pred": "SELECT team FROM table_name_61 WHERE game > \"game 55\" AND date = \"february 24\"",
+          "exact_match": false,
+          "similarity": 0.9504
+        },
+        {
+          "question": "Who is the monarch with the heir thado minsaw?",
+          "context": "CREATE TABLE table_26460435_8 (monarch VARCHAR, heir VARCHAR)",
+          "gold": "SELECT monarch FROM table_26460435_8 WHERE heir = \"Thado Minsaw\"",
+          "pred": "SELECT monarch FROM table_26460435_8 WHERE heir = \"Thado Minsa\"",
+          "exact_match": false,
+          "similarity": 0.9919
+        }
+      ]
+    },
+    {
+      "train": {
+        "name": "B_lr5e-5_r8_ep1",
+        "lr": 5e-05,
+        "r": 8,
+        "lora_alpha": 16,
+        "epochs": 1,
+        "n_train": 1000,
+        "batch_efetivo": 16,
+        "trainable_params": 4399104,
+        "train_loss": 0.1361,
+        "train_time_s": 3673.9,
+        "peak_vram_gb": 2.77,
+        "precision": "fp32",
+        "gradient_checkpointing": true,
+        "loss_history": [
+          {
+            "step": 10,
+            "loss": 0.29314160346984863
+          },
+          {
+            "step": 20,
+            "loss": 0.12444126605987549
+          },
+          {
+            "step": 30,
+            "loss": 0.09493772387504577
+          },
+          {
+            "step": 40,
+            "loss": 0.09663809537887573
+          },
+          {
+            "step": 50,
+            "loss": 0.11027781963348389
+          },
+          {
+            "step": 60,
+            "loss": 0.101711106300354
+          }
+        ],
+        "adapter_dir": "outputs\\B_lr5e-5_r8_ep1"
+      },
+      "eval": {
+        "exact_match": 0.56,
+        "similarity": 0.9572,
+        "eval_time_s": 25.0,
+        "ms_por_exemplo": 250.2,
+        "n_test": 100
+      },
+      "rows": [
+        {
+          "question": "When Essendon played away; where did they play?",
+          "context": "CREATE TABLE table_name_50 (venue VARCHAR, away_team VARCHAR)",
+          "gold": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+          "pred": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the lowest numbered game against Phoenix with a record of 29-17?",
+          "context": "CREATE TABLE table_name_61 (game INTEGER, opponent VARCHAR, record VARCHAR)",
+          "gold": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+          "pred": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who did the Texan's play on Week 4?",
+          "context": "CREATE TABLE table_name_37 (opponent VARCHAR, week VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_37 WHERE week = \"4\"",
+          "pred": "SELECT opponent FROM table_name_37 WHERE week = \"week 4\"",
+          "exact_match": false,
+          "similarity": 0.9515
+        },
+        {
+          "question": "Which Points have Touchdowns larger than 0, and an Extra points smaller than 0?",
+          "context": "CREATE TABLE table_name_70 (points INTEGER, touchdowns VARCHAR, extra_points VARCHAR)",
+          "gold": "SELECT SUM(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+          "pred": "SELECT MAX(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+          "exact_match": false,
+          "similarity": 0.973
+        },
+        {
+          "question": "What is the name of the player who is Sco and moving to greenock morton in the summer?",
+          "context": "CREATE TABLE table_name_83 (name VARCHAR, moving_to VARCHAR, nat VARCHAR, transfer_window VARCHAR)",
+          "gold": "SELECT name FROM table_name_83 WHERE nat = \"sco\" AND transfer_window = \"summer\" AND moving_to = \"greenock morton\"",
+          "pred": "SELECT name FROM table_name_83 WHERE moving_to = \"greenock morton\" AND nat = \"sco\"",
+          "exact_match": false,
+          "similarity": 0.6919
+        },
+        {
+          "question": "Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?",
+          "context": "CREATE TABLE votes (contestant_number VARCHAR); CREATE TABLE contestants (contestant_number VARCHAR, contestant_name VARCHAR)",
+          "gold": "SELECT T1.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY COUNT(*) LIMIT 1",
+          "pred": "SELECT T2.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T2.contestant_number ORDER BY COUNT(T2.contestant_number) LIMIT 1",
+          "exact_match": false,
+          "similarity": 0.9361
+        },
+        {
+          "question": "Which venue had the result 7-1?",
+          "context": "CREATE TABLE table_name_50 (venue VARCHAR, result VARCHAR)",
+          "gold": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+          "pred": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What did the tournament that got an A in 1945 get in 1949?",
+          "context": "CREATE TABLE table_name_22 (Id VARCHAR)",
+          "gold": "SELECT 1949 FROM table_name_22 WHERE 1945 = \"a\"",
+          "pred": "SELECT COUNT(Id) FROM table_name_22 WHERE Year = 1949 AND A = \"yes\"",
+          "exact_match": false,
+          "similarity": 0.7103
+        },
+        {
+          "question": "Find the states where have the colleges whose enrollments are less than the largest size.",
+          "context": "CREATE TABLE college (state VARCHAR, enr INTEGER)",
+          "gold": "SELECT DISTINCT state FROM college WHERE enr < (SELECT MAX(enr) FROM college)",
+          "pred": "SELECT state FROM college WHERE enr < (SELECT MAX(enrollments) FROM college)",
+          "exact_match": false,
+          "similarity": 0.8844
+        },
+        {
+          "question": "What is the name of the episode that had 9.89 million U.S. viewers?",
+          "context": "CREATE TABLE table_24648983_1 (title VARCHAR, us_viewers__million_ VARCHAR)",
+          "gold": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+          "pred": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What are the names of the workshop groups that have bookings with status code \"stop\"?",
+          "context": "CREATE TABLE Bookings (Workshop_Group_ID VARCHAR, Status_Code VARCHAR); CREATE TABLE Drama_Workshop_Groups (Store_Name VARCHAR, Workshop_Group_ID VARCHAR)",
+          "gold": "SELECT T2.Store_Name FROM Bookings AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T1.Status_Code = \"stop\"",
+          "pred": "SELECT Store_Name FROM Drama_Workshop_Groups WHERE Workshop_Group_ID IN (SELECT Workshops.Workshop_Group_ID FROM Bookings WHERE Status_Code = \"Stop\")",
+          "exact_match": false,
+          "similarity": 0.7329
+        },
+        {
+          "question": "Where was the opponent Germany?",
+          "context": "CREATE TABLE table_name_96 (location VARCHAR, opponenent VARCHAR)",
+          "gold": "SELECT location FROM table_name_96 WHERE opponenent = \"germany\"",
+          "pred": "SELECT location FROM table_name_96 WHERE opponent = \"germany\"",
+          "exact_match": false,
+          "similarity": 0.9833
+        },
+        {
+          "question": "Name the candidates for result of lost renomination democratic loss",
+          "context": "CREATE TABLE table_1342149_24 (candidates VARCHAR, result VARCHAR)",
+          "gold": "SELECT candidates FROM table_1342149_24 WHERE result = \"Lost renomination Democratic loss\"",
+          "pred": "SELECT candidates FROM table_1342149_24 WHERE result = \"lost renomination\" AND result = \"democratic loss\"",
+          "exact_match": false,
+          "similarity": 0.9312
+        },
+        {
+          "question": "What is the number of party in the arkansas 1 district",
+          "context": "CREATE TABLE table_1341930_5 (party VARCHAR, district VARCHAR)",
+          "gold": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+          "pred": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many alt names does 1964-011a have?",
+          "context": "CREATE TABLE table_12141496_1 (alt_name VARCHAR, id VARCHAR)",
+          "gold": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011A\"",
+          "pred": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011a\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who is the opponent of the game played on November 20, 1995?",
+          "context": "CREATE TABLE table_name_66 (opponent VARCHAR, date VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+          "pred": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the position of tickets sold/available when the sellout is 82%?",
+          "context": "CREATE TABLE table_16331025_2 (tickets_sold___available VARCHAR, sellout___percentage_ VARCHAR)",
+          "gold": "SELECT COUNT(tickets_sold___available) FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+          "pred": "SELECT tickets_sold___available FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+          "exact_match": false,
+          "similarity": 0.9556
+        },
+        {
+          "question": "Which College/Junior/Club Team (League) did the player in round 6 play for?",
+          "context": "CREATE TABLE table_name_98 (college_junior_club_team__league_ VARCHAR, round VARCHAR)",
+          "gold": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+          "pred": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many in the introduced section had Fokker as a manufacturer, a quantity of 5, and retired later than 1999?",
+          "context": "CREATE TABLE table_name_94 (introduced INTEGER, retired VARCHAR, manufacturer VARCHAR, quantity VARCHAR)",
+          "gold": "SELECT SUM(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = 5 AND retired > 1999",
+          "pred": "SELECT COUNT(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = \"5\" AND introduced > 1999",
+          "exact_match": false,
+          "similarity": 0.9179
+        },
+        {
+          "question": "Where was the audition venue where Peninha was the guest fourth judge?",
+          "context": "CREATE TABLE table_27615445_1 (audition_venue VARCHAR, guest_fourth_judge VARCHAR)",
+          "gold": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+          "pred": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the runner-up in the Memorial Tournament?",
+          "context": "CREATE TABLE table_1602858_1 (runner_s__up VARCHAR, tournament VARCHAR)",
+          "gold": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial tournament\"",
+          "pred": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial Tournament\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the number of bonus points when there are 2 drawn and the points against is 599?",
+          "context": "CREATE TABLE table_name_83 (bonus_points VARCHAR, drawn VARCHAR, points_against VARCHAR)",
+          "gold": "SELECT bonus_points FROM table_name_83 WHERE drawn = \"2\" AND points_against = \"599\"",
+          "pred": "SELECT bonus_points FROM table_name_83 WHERE drawn = \"2\" AND points_against = 599",
+          "exact_match": false,
+          "similarity": 0.9872
+        },
+        {
+          "question": "Which game was a Platformer?",
+          "context": "CREATE TABLE table_name_90 (game VARCHAR, genre VARCHAR)",
+          "gold": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+          "pred": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the individual in the event of 1998 Pokljuka?",
+          "context": "CREATE TABLE table_name_33 (individual VARCHAR, event VARCHAR)",
+          "gold": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+          "pred": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What's the average draft pick number from Carson-Newman College before Round 7?",
+          "context": "CREATE TABLE table_name_21 (pick__number INTEGER, college VARCHAR, round VARCHAR)",
+          "gold": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman\" AND round < 7",
+          "pred": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman college\" AND round < 7",
+          "exact_match": false,
+          "similarity": 0.9545
+        },
+        {
+          "question": "Who was the spouse of the consort who was born as rania al yassin?",
+          "context": "CREATE TABLE table_name_27 (spouse_to VARCHAR, born_as VARCHAR)",
+          "gold": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+          "pred": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many figures for wickets when the strike rate is 54.0?",
+          "context": "CREATE TABLE table_19662262_6 (wickets VARCHAR, strike_rate VARCHAR)",
+          "gold": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+          "pred": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who's the Communist ticket with an American Labor ticket of joseph v. o'leary?",
+          "context": "CREATE TABLE table_name_49 (communist_ticket VARCHAR, american_labor_ticket VARCHAR)",
+          "gold": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+          "pred": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the HDI 2011 of the country with a DI 2011 of 7.63?",
+          "context": "CREATE TABLE table_name_54 (hdi_2011 VARCHAR, di_2011 VARCHAR)",
+          "gold": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+          "pred": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How much Against has Draws of 2, and Losses smaller than 4?",
+          "context": "CREATE TABLE table_name_17 (against INTEGER, draws VARCHAR, losses VARCHAR)",
+          "gold": "SELECT SUM(against) FROM table_name_17 WHERE draws = 2 AND losses < 4",
+          "pred": "SELECT MAX(against) FROM table_name_17 WHERE draws = 2 AND losses < 4",
+          "exact_match": false,
+          "similarity": 0.9688
+        },
+        {
+          "question": "What was Galatasaray score when when he won in 1990 and Trabzonspor was the runner-up?",
+          "context": "CREATE TABLE table_name_24 (score VARCHAR, year VARCHAR, winners VARCHAR, runners_up VARCHAR)",
+          "gold": "SELECT score FROM table_name_24 WHERE winners = \"galatasaray\" AND runners_up = \"trabzonspor\" AND year = 1990",
+          "pred": "SELECT score FROM table_name_24 WHERE year = \"1990\" AND winners = \"galatasaray\" AND runners_up = \"trabzonspor\"",
+          "exact_match": false,
+          "similarity": 0.8544
+        },
+        {
+          "question": "Who was the runner-up of the competition played at Minikahda Club?",
+          "context": "CREATE TABLE table_name_55 (runner_up VARCHAR, venue VARCHAR)",
+          "gold": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+          "pred": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the catalog number for the Grilled Cheese label?",
+          "context": "CREATE TABLE table_name_33 (catalog VARCHAR, label VARCHAR)",
+          "gold": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+          "pred": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which opponent had the result of W 24-14?",
+          "context": "CREATE TABLE table_name_64 (opponent VARCHAR, result VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+          "pred": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the newest season?",
+          "context": "CREATE TABLE table_2140071_7 (season INTEGER)",
+          "gold": "SELECT MAX(season) FROM table_2140071_7",
+          "pred": "SELECT MAX(season) FROM table_2140071_7",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Surface has an Opponent(s) of anna-lena grönefeld tatjana malek?",
+          "context": "CREATE TABLE table_name_8 (surface VARCHAR, opponent_s_ VARCHAR)",
+          "gold": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld tatjana malek\"",
+          "pred": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld\" AND opponent_s_ = \"tatjana malek\"",
+          "exact_match": false,
+          "similarity": 0.9053
+        },
+        {
+          "question": "In what TV season did the 3rd season air?",
+          "context": "CREATE TABLE table_1348989_2 (TV VARCHAR, season VARCHAR)",
+          "gold": "SELECT TV AS season FROM table_1348989_2 WHERE season = \"3rd\"",
+          "pred": "SELECT TV FROM table_1348989_2 WHERE season = \"3\"",
+          "exact_match": false,
+          "similarity": 0.8868
+        },
+        {
+          "question": "Who ran the fastest lap in the team that competed in Zolder, in which Ferrari was the Constructor?",
+          "context": "CREATE TABLE table_name_39 (fastest_lap VARCHAR, constructor VARCHAR, location VARCHAR)",
+          "gold": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+          "pred": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the NBA draft status for Northeast High School?",
+          "context": "CREATE TABLE table_name_7 (nba_draft VARCHAR, school VARCHAR)",
+          "gold": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high school\"",
+          "pred": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high school\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the high Population (total) from 1976 with a (Barcaldine) smaller than 1,780?",
+          "context": "CREATE TABLE table_name_96 (population__total_ INTEGER, year VARCHAR, _barcaldine_ VARCHAR)",
+          "gold": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = 1976 AND _barcaldine_ < 1 OFFSET 780",
+          "pred": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = \"1976\" AND _barcaldine_ < 1780",
+          "exact_match": false,
+          "similarity": 0.9451
+        },
+        {
+          "question": "What 1953 has 2 as a 1949, and 3 as 1952?",
+          "context": "CREATE TABLE table_name_48 (Id VARCHAR)",
+          "gold": "SELECT 1953 FROM table_name_48 WHERE 1949 = \"2\" AND 1952 = \"3\"",
+          "pred": "SELECT Id FROM table_name_48 WHERE 1953 = \"2\" AND 1949 = \"19\" AND 3 = \"3\"",
+          "exact_match": false,
+          "similarity": 0.8
+        },
+        {
+          "question": "What is the total number of losses for the over 30 games played?",
+          "context": "CREATE TABLE table_name_50 (losses VARCHAR, played INTEGER)",
+          "gold": "SELECT COUNT(losses) FROM table_name_50 WHERE played > 30",
+          "pred": "SELECT SUM(losses) FROM table_name_50 WHERE played > 30",
+          "exact_match": false,
+          "similarity": 0.9434
+        },
+        {
+          "question": "Show names for artists without any exhibition.",
+          "context": "CREATE TABLE artist (name VARCHAR, artist_id VARCHAR); CREATE TABLE exhibition (name VARCHAR, artist_id VARCHAR)",
+          "gold": "SELECT name FROM artist WHERE NOT artist_id IN (SELECT artist_id FROM exhibition)",
+          "pred": "SELECT name FROM artist WHERE artist_id NOT IN (SELECT artist_id FROM exhibition)",
+          "exact_match": false,
+          "similarity": 0.95
+        },
+        {
+          "question": "What are the countries of mountains with height bigger than 5000?",
+          "context": "CREATE TABLE mountain (Country VARCHAR, Height INTEGER)",
+          "gold": "SELECT Country FROM mountain WHERE Height > 5000",
+          "pred": "SELECT Country FROM mountain WHERE Height > 5000",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the highest Money ( £ ), when Player is \"Peter Hedblom\"?",
+          "context": "CREATE TABLE table_name_95 (money___ INTEGER, player VARCHAR)",
+          "gold": "SELECT MAX(money___) AS £__ FROM table_name_95 WHERE player = \"peter hedblom\"",
+          "pred": "SELECT MAX(money_) FROM table_name_95 WHERE player = \"peter hedblom\"",
+          "exact_match": false,
+          "similarity": 0.9353
+        },
+        {
+          "question": "When was the appointment date for VFL Wolfsburg?",
+          "context": "CREATE TABLE table_name_72 (date_of_appointment VARCHAR, team VARCHAR)",
+          "gold": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+          "pred": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What language is the moviein that is on UMP movies network through Sky service?",
+          "context": "CREATE TABLE table_name_87 (language VARCHAR, network VARCHAR, genre VARCHAR, service VARCHAR)",
+          "gold": "SELECT language FROM table_name_87 WHERE genre = \"movies\" AND service = \"sky\" AND network = \"ump movies\"",
+          "pred": "SELECT language FROM table_name_87 WHERE network = \"ump movies\" AND service = \"sky\"",
+          "exact_match": false,
+          "similarity": 0.791
+        },
+        {
+          "question": "What Location has a Design flow (LPM) smaller than 1900, and a Construction Start of 2006 june?",
+          "context": "CREATE TABLE table_name_40 (location VARCHAR, design_flow__lpm_ VARCHAR, construction_start VARCHAR)",
+          "gold": "SELECT location FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = \"2006 june\"",
+          "pred": "SELECT location FROM table_name_40 WHERE design_flow_lpm_ < 1900 AND construction_start = \"june 2006\"",
+          "exact_match": false,
+          "similarity": 0.9436
+        },
+        {
+          "question": "What high definition television options are available for Italia 1?",
+          "context": "CREATE TABLE table_15887683_1 (hdtv VARCHAR, television_service VARCHAR)",
+          "gold": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+          "pred": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which suffix has the prefix of isothiocyanato- (-ncs)?",
+          "context": "CREATE TABLE table_name_17 (suffix VARCHAR, prefix VARCHAR)",
+          "gold": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato- (-ncs)\"",
+          "pred": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato-\"",
+          "exact_match": false,
+          "similarity": 0.9545
+        },
+        {
+          "question": "What is the enrollment at the school of Hamilton community?",
+          "context": "CREATE TABLE table_name_3 (enrollment INTEGER, school VARCHAR)",
+          "gold": "SELECT AVG(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+          "pred": "SELECT MAX(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+          "exact_match": false,
+          "similarity": 0.9726
+        },
+        {
+          "question": "What is the date of return for the program for the program \"Big Brother\"?",
+          "context": "CREATE TABLE table_29566606_11 (date_of_return VARCHAR, programme VARCHAR)",
+          "gold": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+          "pred": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "On what date was Patty Fendick an opponent?",
+          "context": "CREATE TABLE table_name_95 (date VARCHAR, opponent VARCHAR)",
+          "gold": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+          "pred": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What position did the player who was with the grizzlies from 2007-2009 play?",
+          "context": "CREATE TABLE table_name_89 (position VARCHAR, years_for_grizzlies VARCHAR)",
+          "gold": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+          "pred": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "When do all the researcher role staff start to work, and when do they stop working?",
+          "context": "CREATE TABLE Project_Staff (date_from VARCHAR, date_to VARCHAR, role_code VARCHAR)",
+          "gold": "SELECT date_from, date_to FROM Project_Staff WHERE role_code = 'researcher'",
+          "pred": "SELECT MIN(date_from), MAX(date_to) FROM Project_Staff WHERE role_code = \"RESEARCHER\"",
+          "exact_match": false,
+          "similarity": 0.9281
+        },
+        {
+          "question": "what is the analog type for wxmi?",
+          "context": "CREATE TABLE table_name_9 (analog VARCHAR, callsign VARCHAR)",
+          "gold": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+          "pred": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what's the record with result being w 21–7",
+          "context": "CREATE TABLE table_14951643_1 (record VARCHAR, result VARCHAR)",
+          "gold": "SELECT record FROM table_14951643_1 WHERE result = \"W 21–7\"",
+          "pred": "SELECT record FROM table_14951643_1 WHERE result = \"W 21-7\"",
+          "exact_match": false,
+          "similarity": 0.9825
+        },
+        {
+          "question": "What is the market income per capita in a county where the status is distressed and the unemployment rate is at 10.5%? ",
+          "context": "CREATE TABLE table_22815568_3 (market_income_per_capita VARCHAR, status VARCHAR, unemployment_rate VARCHAR)",
+          "gold": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"Distressed\" AND unemployment_rate = \"10.5%\"",
+          "pred": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"distressed\" AND unemployment_rate = \"10.5%\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is Date, when Opponent in Final is \"Guy Forget\"?",
+          "context": "CREATE TABLE table_name_64 (date VARCHAR, opponent_in_final VARCHAR)",
+          "gold": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"guy forget\"",
+          "pred": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"Guy Forget\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the time for saturday 4 march 1995",
+          "context": "CREATE TABLE table_16388047_1 (time VARCHAR, date VARCHAR)",
+          "gold": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday 4 March 1995\"",
+          "pred": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday, April 4, 1995\"",
+          "exact_match": false,
+          "similarity": 0.8971
+        },
+        {
+          "question": "What was the lowest win% with an away score of 3-2 in 2011 season?",
+          "context": "CREATE TABLE table_name_53 (win__percentage INTEGER, away VARCHAR, season VARCHAR)",
+          "gold": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = \"2011\"",
+          "pred": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = 2011",
+          "exact_match": false,
+          "similarity": 0.9873
+        },
+        {
+          "question": "how many division  did not qualify for u.s. open cup in 2003",
+          "context": "CREATE TABLE table_1046170_5 (division VARCHAR, us_open_cup VARCHAR, year VARCHAR)",
+          "gold": "SELECT division FROM table_1046170_5 WHERE us_open_cup = \"Did Not Qualify\" AND year = 2003",
+          "pred": "SELECT COUNT(division) FROM table_1046170_5 WHERE us_open_cup = \"U.S. Open Cup\" AND year != 2003",
+          "exact_match": false,
+          "similarity": 0.7978
+        },
+        {
+          "question": "What album is 4:53 long?",
+          "context": "CREATE TABLE table_name_74 (album VARCHAR, length VARCHAR)",
+          "gold": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+          "pred": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What are the formats associated with the Atlantic Records label, catalog number 512336?",
+          "context": "CREATE TABLE table_name_15 (format_s_ VARCHAR, label VARCHAR, catalog VARCHAR)",
+          "gold": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+          "pred": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the number of naming for anomic aphasia",
+          "context": "CREATE TABLE table_2088_1 (naming VARCHAR, type_of_aphasia VARCHAR)",
+          "gold": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic aphasia\"",
+          "pred": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic Aphasia\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the Result F–A on 21 February 2009, when the league position was 1st?",
+          "context": "CREATE TABLE table_name_55 (result_f_a VARCHAR, league_position VARCHAR, date VARCHAR)",
+          "gold": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+          "pred": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is position does Dan O'Sullivan play?",
+          "context": "CREATE TABLE table_name_58 (position VARCHAR, player VARCHAR)",
+          "gold": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+          "pred": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the traditional for  屏南县",
+          "context": "CREATE TABLE table_2013618_1 (traditional VARCHAR, simplified VARCHAR)",
+          "gold": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+          "pred": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the district for hugh glasgow",
+          "context": "CREATE TABLE table_2668352_14 (district VARCHAR, incumbent VARCHAR)",
+          "gold": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+          "pred": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the being qualities for having things of friendships, family, relationships with nature",
+          "context": "CREATE TABLE table_name_20 (being__qualities_ VARCHAR, having__things_ VARCHAR)",
+          "gold": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+          "pred": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "which number lists the production code as 2j5809",
+          "context": "CREATE TABLE table_27403436_1 (no VARCHAR, production_code VARCHAR)",
+          "gold": "SELECT no FROM table_27403436_1 WHERE production_code = \"2J5809\"",
+          "pred": "SELECT no FROM table_27403436_1 WHERE production_code = \"2j5809\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is listed under try bonus when listed under Tries for is tries for?",
+          "context": "CREATE TABLE table_13399573_3 (try_bonus VARCHAR)",
+          "gold": "SELECT try_bonus FROM table_13399573_3 WHERE \"tries_for\" = \"tries_for\"",
+          "pred": "SELECT try_bonus FROM table_13399573_3 WHERE Tries FOR = \"tries for\"",
+          "exact_match": false,
+          "similarity": 0.9552
+        },
+        {
+          "question": "which championship had arantxa sánchez vicario todd woodbridge as opponents in the final ",
+          "context": "CREATE TABLE table_1918850_2 (championship VARCHAR, opponents_in_the_final VARCHAR)",
+          "gold": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+          "pred": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the highest tonnage of the ship from norway?",
+          "context": "CREATE TABLE table_name_71 (tonnage INTEGER, nationality VARCHAR)",
+          "gold": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+          "pred": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the date of the game where Esteban Paredes scored 2 goals?",
+          "context": "CREATE TABLE table_name_62 (date VARCHAR, goal VARCHAR)",
+          "gold": "SELECT date FROM table_name_62 WHERE goal = 2",
+          "pred": "SELECT date FROM table_name_62 WHERE goal = \"esteban paredes score 2 goals\"",
+          "exact_match": false,
+          "similarity": 0.7414
+        },
+        {
+          "question": "What is the Away team with Newcastle United as the Home team?",
+          "context": "CREATE TABLE table_name_42 (away_team VARCHAR, home_team VARCHAR)",
+          "gold": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+          "pred": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what was the competitoin where the opponent is sheffield scimitars?",
+          "context": "CREATE TABLE table_17120964_9 (competition VARCHAR, opponent VARCHAR)",
+          "gold": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+          "pred": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Circuit has a Winning Driver of hans-joachim stuck, and a Round of 3?",
+          "context": "CREATE TABLE table_name_74 (circuit VARCHAR, winning_driver VARCHAR, round VARCHAR)",
+          "gold": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = 3",
+          "pred": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = \"3\"",
+          "exact_match": false,
+          "similarity": 0.9886
+        },
+        {
+          "question": "What is the capacity of the mine that is operated by Cyprus Amax minerals?",
+          "context": "CREATE TABLE table_name_83 (capacity__thousands_of_metric_tons_ VARCHAR, operator VARCHAR)",
+          "gold": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+          "pred": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the Partner in the Algiers 2, Algeria Tournament?",
+          "context": "CREATE TABLE table_name_2 (partner VARCHAR, tournament VARCHAR)",
+          "gold": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algeria\"",
+          "pred": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algeria\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "WHAT kind of No Result has Wins smaller than 2, and Losses larger than 1?",
+          "context": "CREATE TABLE table_name_2 (no_result VARCHAR, wins VARCHAR, losses VARCHAR)",
+          "gold": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+          "pred": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who did the Rangers play in a game that was later than 72 when the team record was 39-27-9?",
+          "context": "CREATE TABLE table_name_93 (opponent VARCHAR, game VARCHAR, record VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+          "pred": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "In game 73, what were the total number of high assists?",
+          "context": "CREATE TABLE table_28768469_10 (high_assists VARCHAR, game VARCHAR)",
+          "gold": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = 73",
+          "pred": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = \"game 73\"",
+          "exact_match": false,
+          "similarity": 0.9466
+        },
+        {
+          "question": "when deland is the fcsl team and 2008 is the year played who is the mlb team?",
+          "context": "CREATE TABLE table_18373863_2 (mlb_team VARCHAR, years_played VARCHAR, fcsl_team VARCHAR)",
+          "gold": "SELECT mlb_team FROM table_18373863_2 WHERE years_played = \"2008\" AND fcsl_team = \"DeLand\"",
+          "pred": "SELECT mlb_team FROM table_18373863_2 WHERE fcsl_team = \"Deland\" AND years_played = 2008",
+          "exact_match": false,
+          "similarity": 0.7294
+        },
+        {
+          "question": "what is the total number of kickoff [a ] where week is week",
+          "context": "CREATE TABLE table_11406866_2 (a_ VARCHAR, kickoff_ VARCHAR)",
+          "gold": "SELECT COUNT(kickoff_)[a_] FROM table_11406866_2 WHERE \"week\" = \"week\"",
+          "pred": "SELECT COUNT(a_) FROM table_11406866_2 WHERE kickoff_ = \"week\"",
+          "exact_match": false,
+          "similarity": 0.8031
+        },
+        {
+          "question": "What position did he finish in 1987?",
+          "context": "CREATE TABLE table_2387790_2 (position VARCHAR, year VARCHAR)",
+          "gold": "SELECT position FROM table_2387790_2 WHERE year = 1987",
+          "pred": "SELECT position FROM table_2387790_2 WHERE year = \"1987\"",
+          "exact_match": false,
+          "similarity": 0.9811
+        },
+        {
+          "question": "What was Gary Player's highest total when his To par was over 15?",
+          "context": "CREATE TABLE table_name_41 (total INTEGER, player VARCHAR, to_par VARCHAR)",
+          "gold": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+          "pred": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the total sum of 50m splits for josefin lillhage in lanes above 8?",
+          "context": "CREATE TABLE table_name_24 (split__50m_ INTEGER, name VARCHAR, lane VARCHAR)",
+          "gold": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+          "pred": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Where has Jimmy Demaret as a player?",
+          "context": "CREATE TABLE table_name_94 (place VARCHAR, player VARCHAR)",
+          "gold": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+          "pred": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the total number of Goals scored that has more than 45 Points?",
+          "context": "CREATE TABLE table_name_74 (goals_scored VARCHAR, points INTEGER)",
+          "gold": "SELECT COUNT(goals_scored) FROM table_name_74 WHERE points > 45",
+          "pred": "SELECT SUM(goals_scored) FROM table_name_74 WHERE points > 45",
+          "exact_match": false,
+          "similarity": 0.9492
+        },
+        {
+          "question": "How did the game number 50 end?",
+          "context": "CREATE TABLE table_23248940_9 (score VARCHAR, game VARCHAR)",
+          "gold": "SELECT score FROM table_23248940_9 WHERE game = 50",
+          "pred": "SELECT score FROM table_23248940_9 WHERE game = \"50\"",
+          "exact_match": false,
+          "similarity": 0.9796
+        },
+        {
+          "question": "What player has a round larger than 2, and position of (d)?",
+          "context": "CREATE TABLE table_name_20 (player VARCHAR, round VARCHAR, position VARCHAR)",
+          "gold": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"(d)\"",
+          "pred": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"d\"",
+          "exact_match": false,
+          "similarity": 0.9844
+        },
+        {
+          "question": "What was sweden's score in T9 place?",
+          "context": "CREATE TABLE table_name_27 (score VARCHAR, place VARCHAR, country VARCHAR)",
+          "gold": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+          "pred": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the Attendance on November 26?",
+          "context": "CREATE TABLE table_name_98 (attendance VARCHAR, date VARCHAR)",
+          "gold": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+          "pred": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who finished in third place when the winner was Karina Bacchi? ",
+          "context": "CREATE TABLE table_25214321_1 (third_place VARCHAR, winner VARCHAR)",
+          "gold": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+          "pred": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "When is the date of appointment when the position in table is 16?",
+          "context": "CREATE TABLE table_27383390_4 (date_of_appointment VARCHAR, position_in_table VARCHAR)",
+          "gold": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = 16",
+          "pred": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = \"16\"",
+          "exact_match": false,
+          "similarity": 0.9868
+        },
+        {
+          "question": "What is Date, when Outcome is \"Winner\", and when Opponents is \"Paul Haarhuis Sandon Stolle\"?",
+          "context": "CREATE TABLE table_name_48 (date VARCHAR, outcome VARCHAR, opponents VARCHAR)",
+          "gold": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+          "pred": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the location of the Saints having 1979- as Years in GFL?",
+          "context": "CREATE TABLE table_name_37 (location VARCHAR, years_in_gfl VARCHAR, nickname VARCHAR)",
+          "gold": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979-\" AND nickname = \"saints\"",
+          "pred": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979\"",
+          "exact_match": false,
+          "similarity": 0.8392
+        },
+        {
+          "question": "Who was the Team that was played against on February 24 and a game after game 55?",
+          "context": "CREATE TABLE table_name_61 (team VARCHAR, game VARCHAR, date VARCHAR)",
+          "gold": "SELECT team FROM table_name_61 WHERE game > 55 AND date = \"february 24\"",
+          "pred": "SELECT team FROM table_name_61 WHERE game = \"February 24\" AND date > \"game 55\"",
+          "exact_match": false,
+          "similarity": 0.7801
+        },
+        {
+          "question": "Who is the monarch with the heir thado minsaw?",
+          "context": "CREATE TABLE table_26460435_8 (monarch VARCHAR, heir VARCHAR)",
+          "gold": "SELECT monarch FROM table_26460435_8 WHERE heir = \"Thado Minsaw\"",
+          "pred": "SELECT monarch FROM table_26460435_8 WHERE heir = \"thado minsaw\"",
+          "exact_match": true,
+          "similarity": 1.0
+        }
+      ]
+    },
+    {
+      "train": {
+        "name": "C_lr2e-4_r16_ep1",
+        "lr": 0.0002,
+        "r": 16,
+        "lora_alpha": 32,
+        "epochs": 1,
+        "n_train": 1000,
+        "batch_efetivo": 16,
+        "trainable_params": 8798208,
+        "train_loss": 0.1109,
+        "train_time_s": 3961.0,
+        "peak_vram_gb": 2.83,
+        "precision": "fp32",
+        "gradient_checkpointing": true,
+        "loss_history": [
+          {
+            "step": 10,
+            "loss": 0.2311034917831421
+          },
+          {
+            "step": 20,
+            "loss": 0.09611327052116395
+          },
+          {
+            "step": 30,
+            "loss": 0.07923641800880432
+          },
+          {
+            "step": 40,
+            "loss": 0.08087470531463622
+          },
+          {
+            "step": 50,
+            "loss": 0.09408758878707886
+          },
+          {
+            "step": 60,
+            "loss": 0.08672047853469848
+          }
+        ],
+        "adapter_dir": "outputs\\C_lr2e-4_r16_ep1"
+      },
+      "eval": {
+        "exact_match": 0.63,
+        "similarity": 0.9617,
+        "eval_time_s": 25.7,
+        "ms_por_exemplo": 256.8,
+        "n_test": 100
+      },
+      "rows": [
+        {
+          "question": "When Essendon played away; where did they play?",
+          "context": "CREATE TABLE table_name_50 (venue VARCHAR, away_team VARCHAR)",
+          "gold": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+          "pred": "SELECT venue FROM table_name_50 WHERE away_team = \"essendon\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the lowest numbered game against Phoenix with a record of 29-17?",
+          "context": "CREATE TABLE table_name_61 (game INTEGER, opponent VARCHAR, record VARCHAR)",
+          "gold": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+          "pred": "SELECT MIN(game) FROM table_name_61 WHERE opponent = \"phoenix\" AND record = \"29-17\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who did the Texan's play on Week 4?",
+          "context": "CREATE TABLE table_name_37 (opponent VARCHAR, week VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_37 WHERE week = \"4\"",
+          "pred": "SELECT opponent FROM table_name_37 WHERE week = \"4\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Points have Touchdowns larger than 0, and an Extra points smaller than 0?",
+          "context": "CREATE TABLE table_name_70 (points INTEGER, touchdowns VARCHAR, extra_points VARCHAR)",
+          "gold": "SELECT SUM(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+          "pred": "SELECT MIN(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0",
+          "exact_match": false,
+          "similarity": 0.973
+        },
+        {
+          "question": "What is the name of the player who is Sco and moving to greenock morton in the summer?",
+          "context": "CREATE TABLE table_name_83 (name VARCHAR, moving_to VARCHAR, nat VARCHAR, transfer_window VARCHAR)",
+          "gold": "SELECT name FROM table_name_83 WHERE nat = \"sco\" AND transfer_window = \"summer\" AND moving_to = \"greenock morton\"",
+          "pred": "SELECT name FROM table_name_83 WHERE moving_to = \"sco\" AND nat = \"greenock morton\" AND transfer_window > 2019",
+          "exact_match": false,
+          "similarity": 0.619
+        },
+        {
+          "question": "Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes?",
+          "context": "CREATE TABLE votes (contestant_number VARCHAR); CREATE TABLE contestants (contestant_number VARCHAR, contestant_name VARCHAR)",
+          "gold": "SELECT T1.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY COUNT(*) LIMIT 1",
+          "pred": "SELECT T1.contestant_number, T2.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_number ORDER BY COUNT(*) LIMIT 1",
+          "exact_match": false,
+          "similarity": 0.9946
+        },
+        {
+          "question": "Which venue had the result 7-1?",
+          "context": "CREATE TABLE table_name_50 (venue VARCHAR, result VARCHAR)",
+          "gold": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+          "pred": "SELECT venue FROM table_name_50 WHERE result = \"7-1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What did the tournament that got an A in 1945 get in 1949?",
+          "context": "CREATE TABLE table_name_22 (Id VARCHAR)",
+          "gold": "SELECT 1949 FROM table_name_22 WHERE 1945 = \"a\"",
+          "pred": "SELECT 1949 AS 1945 FROM table_name_22 WHERE Id = \"a\"",
+          "exact_match": false,
+          "similarity": 0.8542
+        },
+        {
+          "question": "Find the states where have the colleges whose enrollments are less than the largest size.",
+          "context": "CREATE TABLE college (state VARCHAR, enr INTEGER)",
+          "gold": "SELECT DISTINCT state FROM college WHERE enr < (SELECT MAX(enr) FROM college)",
+          "pred": "SELECT state FROM college WHERE enr < (SELECT MAX(enrollments) FROM college)",
+          "exact_match": false,
+          "similarity": 0.8844
+        },
+        {
+          "question": "What is the name of the episode that had 9.89 million U.S. viewers?",
+          "context": "CREATE TABLE table_24648983_1 (title VARCHAR, us_viewers__million_ VARCHAR)",
+          "gold": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+          "pred": "SELECT title FROM table_24648983_1 WHERE us_viewers__million_ = \"9.89\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What are the names of the workshop groups that have bookings with status code \"stop\"?",
+          "context": "CREATE TABLE Bookings (Workshop_Group_ID VARCHAR, Status_Code VARCHAR); CREATE TABLE Drama_Workshop_Groups (Store_Name VARCHAR, Workshop_Group_ID VARCHAR)",
+          "gold": "SELECT T2.Store_Name FROM Bookings AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T1.Status_Code = \"stop\"",
+          "pred": "SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Bookings AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T2.Status_Code = \"Stop\"",
+          "exact_match": false,
+          "similarity": 0.8493
+        },
+        {
+          "question": "Where was the opponent Germany?",
+          "context": "CREATE TABLE table_name_96 (location VARCHAR, opponenent VARCHAR)",
+          "gold": "SELECT location FROM table_name_96 WHERE opponenent = \"germany\"",
+          "pred": "SELECT location FROM table_name_96 WHERE opponenent = \"germania\"",
+          "exact_match": false,
+          "similarity": 0.9756
+        },
+        {
+          "question": "Name the candidates for result of lost renomination democratic loss",
+          "context": "CREATE TABLE table_1342149_24 (candidates VARCHAR, result VARCHAR)",
+          "gold": "SELECT candidates FROM table_1342149_24 WHERE result = \"Lost renomination Democratic loss\"",
+          "pred": "SELECT candidates FROM table_1342149_24 WHERE result = \"Lost Renomination\" AND result = \"Democratic Loss\"",
+          "exact_match": false,
+          "similarity": 0.9312
+        },
+        {
+          "question": "What is the number of party in the arkansas 1 district",
+          "context": "CREATE TABLE table_1341930_5 (party VARCHAR, district VARCHAR)",
+          "gold": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+          "pred": "SELECT COUNT(party) FROM table_1341930_5 WHERE district = \"Arkansas 1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many alt names does 1964-011a have?",
+          "context": "CREATE TABLE table_12141496_1 (alt_name VARCHAR, id VARCHAR)",
+          "gold": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011A\"",
+          "pred": "SELECT COUNT(alt_name) FROM table_12141496_1 WHERE id = \"1964-011a\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who is the opponent of the game played on November 20, 1995?",
+          "context": "CREATE TABLE table_name_66 (opponent VARCHAR, date VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+          "pred": "SELECT opponent FROM table_name_66 WHERE date = \"november 20, 1995\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the position of tickets sold/available when the sellout is 82%?",
+          "context": "CREATE TABLE table_16331025_2 (tickets_sold___available VARCHAR, sellout___percentage_ VARCHAR)",
+          "gold": "SELECT COUNT(tickets_sold___available) FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+          "pred": "SELECT COUNT(tickets_sold___available) FROM table_16331025_2 WHERE sellout___percentage_ = \"82%\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which College/Junior/Club Team (League) did the player in round 6 play for?",
+          "context": "CREATE TABLE table_name_98 (college_junior_club_team__league_ VARCHAR, round VARCHAR)",
+          "gold": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+          "pred": "SELECT college_junior_club_team__league_ FROM table_name_98 WHERE round = \"6\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many in the introduced section had Fokker as a manufacturer, a quantity of 5, and retired later than 1999?",
+          "context": "CREATE TABLE table_name_94 (introduced INTEGER, retired VARCHAR, manufacturer VARCHAR, quantity VARCHAR)",
+          "gold": "SELECT SUM(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = 5 AND retired > 1999",
+          "pred": "SELECT MIN(introduced) FROM table_name_94 WHERE manufacturer = \"fokker\" AND quantity = \"5\" AND retired > 1999",
+          "exact_match": false,
+          "similarity": 0.9703
+        },
+        {
+          "question": "Where was the audition venue where Peninha was the guest fourth judge?",
+          "context": "CREATE TABLE table_27615445_1 (audition_venue VARCHAR, guest_fourth_judge VARCHAR)",
+          "gold": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+          "pred": "SELECT audition_venue FROM table_27615445_1 WHERE guest_fourth_judge = \"Peninha\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the runner-up in the Memorial Tournament?",
+          "context": "CREATE TABLE table_1602858_1 (runner_s__up VARCHAR, tournament VARCHAR)",
+          "gold": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial tournament\"",
+          "pred": "SELECT runner_s__up FROM table_1602858_1 WHERE tournament = \"Memorial\"",
+          "exact_match": false,
+          "similarity": 0.9252
+        },
+        {
+          "question": "What is the number of bonus points when there are 2 drawn and the points against is 599?",
+          "context": "CREATE TABLE table_name_83 (bonus_points VARCHAR, drawn VARCHAR, points_against VARCHAR)",
+          "gold": "SELECT bonus_points FROM table_name_83 WHERE drawn = \"2\" AND points_against = \"599\"",
+          "pred": "SELECT COUNT(bonus_points) FROM table_name_83 WHERE drawn = \"2\" AND points_against = \"599\"",
+          "exact_match": false,
+          "similarity": 0.9512
+        },
+        {
+          "question": "Which game was a Platformer?",
+          "context": "CREATE TABLE table_name_90 (game VARCHAR, genre VARCHAR)",
+          "gold": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+          "pred": "SELECT game FROM table_name_90 WHERE genre = \"platformer\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the individual in the event of 1998 Pokljuka?",
+          "context": "CREATE TABLE table_name_33 (individual VARCHAR, event VARCHAR)",
+          "gold": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+          "pred": "SELECT individual FROM table_name_33 WHERE event = \"1998 pokljuka\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What's the average draft pick number from Carson-Newman College before Round 7?",
+          "context": "CREATE TABLE table_name_21 (pick__number INTEGER, college VARCHAR, round VARCHAR)",
+          "gold": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman\" AND round < 7",
+          "pred": "SELECT AVG(pick__number) FROM table_name_21 WHERE college = \"carson-newman college\" AND round < 7",
+          "exact_match": false,
+          "similarity": 0.9545
+        },
+        {
+          "question": "Who was the spouse of the consort who was born as rania al yassin?",
+          "context": "CREATE TABLE table_name_27 (spouse_to VARCHAR, born_as VARCHAR)",
+          "gold": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+          "pred": "SELECT spouse_to FROM table_name_27 WHERE born_as = \"rania al yassin\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How many figures for wickets when the strike rate is 54.0?",
+          "context": "CREATE TABLE table_19662262_6 (wickets VARCHAR, strike_rate VARCHAR)",
+          "gold": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+          "pred": "SELECT COUNT(wickets) FROM table_19662262_6 WHERE strike_rate = \"54.0\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who's the Communist ticket with an American Labor ticket of joseph v. o'leary?",
+          "context": "CREATE TABLE table_name_49 (communist_ticket VARCHAR, american_labor_ticket VARCHAR)",
+          "gold": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+          "pred": "SELECT communist_ticket FROM table_name_49 WHERE american_labor_ticket = \"joseph v. o'leary\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the HDI 2011 of the country with a DI 2011 of 7.63?",
+          "context": "CREATE TABLE table_name_54 (hdi_2011 VARCHAR, di_2011 VARCHAR)",
+          "gold": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+          "pred": "SELECT hdi_2011 FROM table_name_54 WHERE di_2011 = \"7.63\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How much Against has Draws of 2, and Losses smaller than 4?",
+          "context": "CREATE TABLE table_name_17 (against INTEGER, draws VARCHAR, losses VARCHAR)",
+          "gold": "SELECT SUM(against) FROM table_name_17 WHERE draws = 2 AND losses < 4",
+          "pred": "SELECT MAX(against) FROM table_name_17 WHERE draws = \"2\" AND losses < 4",
+          "exact_match": false,
+          "similarity": 0.9538
+        },
+        {
+          "question": "What was Galatasaray score when when he won in 1990 and Trabzonspor was the runner-up?",
+          "context": "CREATE TABLE table_name_24 (score VARCHAR, year VARCHAR, winners VARCHAR, runners_up VARCHAR)",
+          "gold": "SELECT score FROM table_name_24 WHERE winners = \"galatasaray\" AND runners_up = \"trabzonspor\" AND year = 1990",
+          "pred": "SELECT score FROM table_name_24 WHERE year = \"1990\" AND winners = \"galatasaray\" AND runners_up = \"trabzonspor\"",
+          "exact_match": false,
+          "similarity": 0.8544
+        },
+        {
+          "question": "Who was the runner-up of the competition played at Minikahda Club?",
+          "context": "CREATE TABLE table_name_55 (runner_up VARCHAR, venue VARCHAR)",
+          "gold": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+          "pred": "SELECT runner_up FROM table_name_55 WHERE venue = \"minikahda club\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the catalog number for the Grilled Cheese label?",
+          "context": "CREATE TABLE table_name_33 (catalog VARCHAR, label VARCHAR)",
+          "gold": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+          "pred": "SELECT catalog FROM table_name_33 WHERE label = \"grilled cheese\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which opponent had the result of W 24-14?",
+          "context": "CREATE TABLE table_name_64 (opponent VARCHAR, result VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+          "pred": "SELECT opponent FROM table_name_64 WHERE result = \"w 24-14\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the newest season?",
+          "context": "CREATE TABLE table_2140071_7 (season INTEGER)",
+          "gold": "SELECT MAX(season) FROM table_2140071_7",
+          "pred": "SELECT MAX(season) FROM table_2140071_7",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Surface has an Opponent(s) of anna-lena grönefeld tatjana malek?",
+          "context": "CREATE TABLE table_name_8 (surface VARCHAR, opponent_s_ VARCHAR)",
+          "gold": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld tatjana malek\"",
+          "pred": "SELECT surface FROM table_name_8 WHERE opponent_s_ = \"anna-lena grönefeld tatjana malek\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "In what TV season did the 3rd season air?",
+          "context": "CREATE TABLE table_1348989_2 (TV VARCHAR, season VARCHAR)",
+          "gold": "SELECT TV AS season FROM table_1348989_2 WHERE season = \"3rd\"",
+          "pred": "SELECT TV FROM table_1348989_2 WHERE season = \"3\"",
+          "exact_match": false,
+          "similarity": 0.8868
+        },
+        {
+          "question": "Who ran the fastest lap in the team that competed in Zolder, in which Ferrari was the Constructor?",
+          "context": "CREATE TABLE table_name_39 (fastest_lap VARCHAR, constructor VARCHAR, location VARCHAR)",
+          "gold": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+          "pred": "SELECT fastest_lap FROM table_name_39 WHERE constructor = \"ferrari\" AND location = \"zolder\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the NBA draft status for Northeast High School?",
+          "context": "CREATE TABLE table_name_7 (nba_draft VARCHAR, school VARCHAR)",
+          "gold": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high school\"",
+          "pred": "SELECT nba_draft FROM table_name_7 WHERE school = \"northeast high school\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the high Population (total) from 1976 with a (Barcaldine) smaller than 1,780?",
+          "context": "CREATE TABLE table_name_96 (population__total_ INTEGER, year VARCHAR, _barcaldine_ VARCHAR)",
+          "gold": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = 1976 AND _barcaldine_ < 1 OFFSET 780",
+          "pred": "SELECT MAX(population__total_) FROM table_name_96 WHERE year = \"1976\" AND _barcaldine_ < 1 OFFSET 780",
+          "exact_match": false,
+          "similarity": 0.9895
+        },
+        {
+          "question": "What 1953 has 2 as a 1949, and 3 as 1952?",
+          "context": "CREATE TABLE table_name_48 (Id VARCHAR)",
+          "gold": "SELECT 1953 FROM table_name_48 WHERE 1949 = \"2\" AND 1952 = \"3\"",
+          "pred": "SELECT 1953 FROM table_name_48 WHERE 2 = \"1949\" AND 3 = \"1952\"",
+          "exact_match": false,
+          "similarity": 0.8966
+        },
+        {
+          "question": "What is the total number of losses for the over 30 games played?",
+          "context": "CREATE TABLE table_name_50 (losses VARCHAR, played INTEGER)",
+          "gold": "SELECT COUNT(losses) FROM table_name_50 WHERE played > 30",
+          "pred": "SELECT COUNT(losses) FROM table_name_50 WHERE played > 30",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Show names for artists without any exhibition.",
+          "context": "CREATE TABLE artist (name VARCHAR, artist_id VARCHAR); CREATE TABLE exhibition (name VARCHAR, artist_id VARCHAR)",
+          "gold": "SELECT name FROM artist WHERE NOT artist_id IN (SELECT artist_id FROM exhibition)",
+          "pred": "SELECT name FROM artist EXCEPT SELECT T1.name FROM artist AS T1 JOIN exhibition AS T2 ON T1.artist_id = T2.artist_id GROUP BY T1.name HAVING COUNT(*) = 0",
+          "exact_match": false,
+          "similarity": 0.4803
+        },
+        {
+          "question": "What are the countries of mountains with height bigger than 5000?",
+          "context": "CREATE TABLE mountain (Country VARCHAR, Height INTEGER)",
+          "gold": "SELECT Country FROM mountain WHERE Height > 5000",
+          "pred": "SELECT Country FROM mountain WHERE Height > 5000",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the highest Money ( £ ), when Player is \"Peter Hedblom\"?",
+          "context": "CREATE TABLE table_name_95 (money___ INTEGER, player VARCHAR)",
+          "gold": "SELECT MAX(money___) AS £__ FROM table_name_95 WHERE player = \"peter hedblom\"",
+          "pred": "SELECT MAX(money_) FROM table_name_95 WHERE player = \"peter hedblom\"",
+          "exact_match": false,
+          "similarity": 0.9353
+        },
+        {
+          "question": "When was the appointment date for VFL Wolfsburg?",
+          "context": "CREATE TABLE table_name_72 (date_of_appointment VARCHAR, team VARCHAR)",
+          "gold": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+          "pred": "SELECT date_of_appointment FROM table_name_72 WHERE team = \"vfl wolfsburg\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What language is the moviein that is on UMP movies network through Sky service?",
+          "context": "CREATE TABLE table_name_87 (language VARCHAR, network VARCHAR, genre VARCHAR, service VARCHAR)",
+          "gold": "SELECT language FROM table_name_87 WHERE genre = \"movies\" AND service = \"sky\" AND network = \"ump movies\"",
+          "pred": "SELECT language FROM table_name_87 WHERE network = \"ump movies\" AND genre = \"movie\" AND service = \"sky\"",
+          "exact_match": false,
+          "similarity": 0.6256
+        },
+        {
+          "question": "What Location has a Design flow (LPM) smaller than 1900, and a Construction Start of 2006 june?",
+          "context": "CREATE TABLE table_name_40 (location VARCHAR, design_flow__lpm_ VARCHAR, construction_start VARCHAR)",
+          "gold": "SELECT location FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = \"2006 june\"",
+          "pred": "SELECT location FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = \"june 2006\"",
+          "exact_match": false,
+          "similarity": 0.949
+        },
+        {
+          "question": "What high definition television options are available for Italia 1?",
+          "context": "CREATE TABLE table_15887683_1 (hdtv VARCHAR, television_service VARCHAR)",
+          "gold": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+          "pred": "SELECT hdtv FROM table_15887683_1 WHERE television_service = \"Italia 1\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which suffix has the prefix of isothiocyanato- (-ncs)?",
+          "context": "CREATE TABLE table_name_17 (suffix VARCHAR, prefix VARCHAR)",
+          "gold": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato- (-ncs)\"",
+          "pred": "SELECT suffix FROM table_name_17 WHERE prefix = \"isothiocyanato-\"",
+          "exact_match": false,
+          "similarity": 0.9545
+        },
+        {
+          "question": "What is the enrollment at the school of Hamilton community?",
+          "context": "CREATE TABLE table_name_3 (enrollment INTEGER, school VARCHAR)",
+          "gold": "SELECT AVG(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+          "pred": "SELECT MIN(enrollment) FROM table_name_3 WHERE school = \"hamilton community\"",
+          "exact_match": false,
+          "similarity": 0.9589
+        },
+        {
+          "question": "What is the date of return for the program for the program \"Big Brother\"?",
+          "context": "CREATE TABLE table_29566606_11 (date_of_return VARCHAR, programme VARCHAR)",
+          "gold": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+          "pred": "SELECT date_of_return FROM table_29566606_11 WHERE programme = \"Big Brother\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "On what date was Patty Fendick an opponent?",
+          "context": "CREATE TABLE table_name_95 (date VARCHAR, opponent VARCHAR)",
+          "gold": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+          "pred": "SELECT date FROM table_name_95 WHERE opponent = \"patty fendick\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What position did the player who was with the grizzlies from 2007-2009 play?",
+          "context": "CREATE TABLE table_name_89 (position VARCHAR, years_for_grizzlies VARCHAR)",
+          "gold": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+          "pred": "SELECT position FROM table_name_89 WHERE years_for_grizzlies = \"2007-2009\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "When do all the researcher role staff start to work, and when do they stop working?",
+          "context": "CREATE TABLE Project_Staff (date_from VARCHAR, date_to VARCHAR, role_code VARCHAR)",
+          "gold": "SELECT date_from, date_to FROM Project_Staff WHERE role_code = 'researcher'",
+          "pred": "SELECT MIN(date_from), MAX(date_to) FROM Project_Staff",
+          "exact_match": false,
+          "similarity": 0.6774
+        },
+        {
+          "question": "what is the analog type for wxmi?",
+          "context": "CREATE TABLE table_name_9 (analog VARCHAR, callsign VARCHAR)",
+          "gold": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+          "pred": "SELECT analog FROM table_name_9 WHERE callsign = \"wxmi\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what's the record with result being w 21–7",
+          "context": "CREATE TABLE table_14951643_1 (record VARCHAR, result VARCHAR)",
+          "gold": "SELECT record FROM table_14951643_1 WHERE result = \"W 21–7\"",
+          "pred": "SELECT record FROM table_14951643_1 WHERE result = \"W 21–7\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the market income per capita in a county where the status is distressed and the unemployment rate is at 10.5%? ",
+          "context": "CREATE TABLE table_22815568_3 (market_income_per_capita VARCHAR, status VARCHAR, unemployment_rate VARCHAR)",
+          "gold": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"Distressed\" AND unemployment_rate = \"10.5%\"",
+          "pred": "SELECT market_income_per_capita FROM table_22815568_3 WHERE status = \"Distressed\" AND unemployment_rate = \"10.5%\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is Date, when Opponent in Final is \"Guy Forget\"?",
+          "context": "CREATE TABLE table_name_64 (date VARCHAR, opponent_in_final VARCHAR)",
+          "gold": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"guy forget\"",
+          "pred": "SELECT date FROM table_name_64 WHERE opponent_in_final = \"guy forget\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the time for saturday 4 march 1995",
+          "context": "CREATE TABLE table_16388047_1 (time VARCHAR, date VARCHAR)",
+          "gold": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday 4 March 1995\"",
+          "pred": "SELECT time FROM table_16388047_1 WHERE date = \"Saturday, April 4, 1995\"",
+          "exact_match": false,
+          "similarity": 0.8971
+        },
+        {
+          "question": "What was the lowest win% with an away score of 3-2 in 2011 season?",
+          "context": "CREATE TABLE table_name_53 (win__percentage INTEGER, away VARCHAR, season VARCHAR)",
+          "gold": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = \"2011\"",
+          "pred": "SELECT MIN(win__percentage) FROM table_name_53 WHERE away = \"3-2\" AND season = \"2011\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "how many division  did not qualify for u.s. open cup in 2003",
+          "context": "CREATE TABLE table_1046170_5 (division VARCHAR, us_open_cup VARCHAR, year VARCHAR)",
+          "gold": "SELECT division FROM table_1046170_5 WHERE us_open_cup = \"Did Not Qualify\" AND year = 2003",
+          "pred": "SELECT COUNT(division) FROM table_1046170_5 WHERE us_open_cup = \"U.S. Open Cup\" AND year < 2003",
+          "exact_match": false,
+          "similarity": 0.7955
+        },
+        {
+          "question": "What album is 4:53 long?",
+          "context": "CREATE TABLE table_name_74 (album VARCHAR, length VARCHAR)",
+          "gold": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+          "pred": "SELECT album FROM table_name_74 WHERE length = \"4:53\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What are the formats associated with the Atlantic Records label, catalog number 512336?",
+          "context": "CREATE TABLE table_name_15 (format_s_ VARCHAR, label VARCHAR, catalog VARCHAR)",
+          "gold": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+          "pred": "SELECT format_s_ FROM table_name_15 WHERE label = \"atlantic records\" AND catalog = \"512336\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the number of naming for anomic aphasia",
+          "context": "CREATE TABLE table_2088_1 (naming VARCHAR, type_of_aphasia VARCHAR)",
+          "gold": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic aphasia\"",
+          "pred": "SELECT COUNT(naming) FROM table_2088_1 WHERE type_of_aphasia = \"Anomic Aphasia\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the Result F–A on 21 February 2009, when the league position was 1st?",
+          "context": "CREATE TABLE table_name_55 (result_f_a VARCHAR, league_position VARCHAR, date VARCHAR)",
+          "gold": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+          "pred": "SELECT result_f_a FROM table_name_55 WHERE league_position = \"1st\" AND date = \"21 february 2009\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is position does Dan O'Sullivan play?",
+          "context": "CREATE TABLE table_name_58 (position VARCHAR, player VARCHAR)",
+          "gold": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+          "pred": "SELECT position FROM table_name_58 WHERE player = \"dan o'sullivan\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the traditional for  屏南县",
+          "context": "CREATE TABLE table_2013618_1 (traditional VARCHAR, simplified VARCHAR)",
+          "gold": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+          "pred": "SELECT traditional FROM table_2013618_1 WHERE simplified = \"屏南县\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the district for hugh glasgow",
+          "context": "CREATE TABLE table_2668352_14 (district VARCHAR, incumbent VARCHAR)",
+          "gold": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+          "pred": "SELECT district FROM table_2668352_14 WHERE incumbent = \"Hugh Glasgow\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Name the being qualities for having things of friendships, family, relationships with nature",
+          "context": "CREATE TABLE table_name_20 (being__qualities_ VARCHAR, having__things_ VARCHAR)",
+          "gold": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+          "pred": "SELECT being__qualities_ FROM table_name_20 WHERE having__things_ = \"friendships, family, relationships with nature\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "which number lists the production code as 2j5809",
+          "context": "CREATE TABLE table_27403436_1 (no VARCHAR, production_code VARCHAR)",
+          "gold": "SELECT no FROM table_27403436_1 WHERE production_code = \"2J5809\"",
+          "pred": "SELECT no FROM table_27403436_1 WHERE production_code = \"2j5809\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is listed under try bonus when listed under Tries for is tries for?",
+          "context": "CREATE TABLE table_13399573_3 (try_bonus VARCHAR)",
+          "gold": "SELECT try_bonus FROM table_13399573_3 WHERE \"tries_for\" = \"tries_for\"",
+          "pred": "SELECT try_bonus FROM table_13399573_3 WHERE Tries = \"is tries for\"",
+          "exact_match": false,
+          "similarity": 0.9173
+        },
+        {
+          "question": "which championship had arantxa sánchez vicario todd woodbridge as opponents in the final ",
+          "context": "CREATE TABLE table_1918850_2 (championship VARCHAR, opponents_in_the_final VARCHAR)",
+          "gold": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+          "pred": "SELECT championship FROM table_1918850_2 WHERE opponents_in_the_final = \"Arantxa Sánchez Vicario Todd Woodbridge\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the highest tonnage of the ship from norway?",
+          "context": "CREATE TABLE table_name_71 (tonnage INTEGER, nationality VARCHAR)",
+          "gold": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+          "pred": "SELECT MAX(tonnage) FROM table_name_71 WHERE nationality = \"norway\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the date of the game where Esteban Paredes scored 2 goals?",
+          "context": "CREATE TABLE table_name_62 (date VARCHAR, goal VARCHAR)",
+          "gold": "SELECT date FROM table_name_62 WHERE goal = 2",
+          "pred": "SELECT date FROM table_name_62 WHERE goal = \"2\"",
+          "exact_match": false,
+          "similarity": 0.9773
+        },
+        {
+          "question": "What is the Away team with Newcastle United as the Home team?",
+          "context": "CREATE TABLE table_name_42 (away_team VARCHAR, home_team VARCHAR)",
+          "gold": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+          "pred": "SELECT away_team FROM table_name_42 WHERE home_team = \"newcastle united\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what was the competitoin where the opponent is sheffield scimitars?",
+          "context": "CREATE TABLE table_17120964_9 (competition VARCHAR, opponent VARCHAR)",
+          "gold": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+          "pred": "SELECT competition FROM table_17120964_9 WHERE opponent = \"Sheffield Scimitars\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Which Circuit has a Winning Driver of hans-joachim stuck, and a Round of 3?",
+          "context": "CREATE TABLE table_name_74 (circuit VARCHAR, winning_driver VARCHAR, round VARCHAR)",
+          "gold": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = 3",
+          "pred": "SELECT circuit FROM table_name_74 WHERE winning_driver = \"hans-joachim stuck\" AND round = \"3\"",
+          "exact_match": false,
+          "similarity": 0.9886
+        },
+        {
+          "question": "What is the capacity of the mine that is operated by Cyprus Amax minerals?",
+          "context": "CREATE TABLE table_name_83 (capacity__thousands_of_metric_tons_ VARCHAR, operator VARCHAR)",
+          "gold": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+          "pred": "SELECT capacity__thousands_of_metric_tons_ FROM table_name_83 WHERE operator = \"cyprus amax minerals\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who was the Partner in the Algiers 2, Algeria Tournament?",
+          "context": "CREATE TABLE table_name_2 (partner VARCHAR, tournament VARCHAR)",
+          "gold": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algeria\"",
+          "pred": "SELECT partner FROM table_name_2 WHERE tournament = \"algiers 2, algeria\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "WHAT kind of No Result has Wins smaller than 2, and Losses larger than 1?",
+          "context": "CREATE TABLE table_name_2 (no_result VARCHAR, wins VARCHAR, losses VARCHAR)",
+          "gold": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+          "pred": "SELECT no_result FROM table_name_2 WHERE wins < 2 AND losses > 1",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who did the Rangers play in a game that was later than 72 when the team record was 39-27-9?",
+          "context": "CREATE TABLE table_name_93 (opponent VARCHAR, game VARCHAR, record VARCHAR)",
+          "gold": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+          "pred": "SELECT opponent FROM table_name_93 WHERE game > 72 AND record = \"39-27-9\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "In game 73, what were the total number of high assists?",
+          "context": "CREATE TABLE table_28768469_10 (high_assists VARCHAR, game VARCHAR)",
+          "gold": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = 73",
+          "pred": "SELECT COUNT(high_assists) FROM table_28768469_10 WHERE game = \"Game 73\"",
+          "exact_match": false,
+          "similarity": 0.9466
+        },
+        {
+          "question": "when deland is the fcsl team and 2008 is the year played who is the mlb team?",
+          "context": "CREATE TABLE table_18373863_2 (mlb_team VARCHAR, years_played VARCHAR, fcsl_team VARCHAR)",
+          "gold": "SELECT mlb_team FROM table_18373863_2 WHERE years_played = \"2008\" AND fcsl_team = \"DeLand\"",
+          "pred": "SELECT mlb_team FROM table_18373863_2 WHERE years_played = \"2008\" AND fcsl_team = \"Deland\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "what is the total number of kickoff [a ] where week is week",
+          "context": "CREATE TABLE table_11406866_2 (a_ VARCHAR, kickoff_ VARCHAR)",
+          "gold": "SELECT COUNT(kickoff_)[a_] FROM table_11406866_2 WHERE \"week\" = \"week\"",
+          "pred": "SELECT COUNT(a_) FROM table_11406866_2 WHERE kickoff_ = \"Week\"",
+          "exact_match": false,
+          "similarity": 0.8031
+        },
+        {
+          "question": "What position did he finish in 1987?",
+          "context": "CREATE TABLE table_2387790_2 (position VARCHAR, year VARCHAR)",
+          "gold": "SELECT position FROM table_2387790_2 WHERE year = 1987",
+          "pred": "SELECT position FROM table_2387790_2 WHERE year = \"1987\"",
+          "exact_match": false,
+          "similarity": 0.9811
+        },
+        {
+          "question": "What was Gary Player's highest total when his To par was over 15?",
+          "context": "CREATE TABLE table_name_41 (total INTEGER, player VARCHAR, to_par VARCHAR)",
+          "gold": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+          "pred": "SELECT MAX(total) FROM table_name_41 WHERE player = \"gary player\" AND to_par > 15",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the total sum of 50m splits for josefin lillhage in lanes above 8?",
+          "context": "CREATE TABLE table_name_24 (split__50m_ INTEGER, name VARCHAR, lane VARCHAR)",
+          "gold": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+          "pred": "SELECT SUM(split__50m_) FROM table_name_24 WHERE name = \"josefin lillhage\" AND lane > 8",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Where has Jimmy Demaret as a player?",
+          "context": "CREATE TABLE table_name_94 (place VARCHAR, player VARCHAR)",
+          "gold": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+          "pred": "SELECT place FROM table_name_94 WHERE player = \"jimmy demaret\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the total number of Goals scored that has more than 45 Points?",
+          "context": "CREATE TABLE table_name_74 (goals_scored VARCHAR, points INTEGER)",
+          "gold": "SELECT COUNT(goals_scored) FROM table_name_74 WHERE points > 45",
+          "pred": "SELECT COUNT(goals_scored) FROM table_name_74 WHERE points > 45",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "How did the game number 50 end?",
+          "context": "CREATE TABLE table_23248940_9 (score VARCHAR, game VARCHAR)",
+          "gold": "SELECT score FROM table_23248940_9 WHERE game = 50",
+          "pred": "SELECT score FROM table_23248940_9 WHERE game = \"Game 50\"",
+          "exact_match": false,
+          "similarity": 0.932
+        },
+        {
+          "question": "What player has a round larger than 2, and position of (d)?",
+          "context": "CREATE TABLE table_name_20 (player VARCHAR, round VARCHAR, position VARCHAR)",
+          "gold": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"(d)\"",
+          "pred": "SELECT player FROM table_name_20 WHERE round > 2 AND position = \"(d)\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was sweden's score in T9 place?",
+          "context": "CREATE TABLE table_name_27 (score VARCHAR, place VARCHAR, country VARCHAR)",
+          "gold": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+          "pred": "SELECT score FROM table_name_27 WHERE place = \"t9\" AND country = \"sweden\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What was the Attendance on November 26?",
+          "context": "CREATE TABLE table_name_98 (attendance VARCHAR, date VARCHAR)",
+          "gold": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+          "pred": "SELECT attendance FROM table_name_98 WHERE date = \"november 26\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "Who finished in third place when the winner was Karina Bacchi? ",
+          "context": "CREATE TABLE table_25214321_1 (third_place VARCHAR, winner VARCHAR)",
+          "gold": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+          "pred": "SELECT third_place FROM table_25214321_1 WHERE winner = \"Karina Bacchi\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "When is the date of appointment when the position in table is 16?",
+          "context": "CREATE TABLE table_27383390_4 (date_of_appointment VARCHAR, position_in_table VARCHAR)",
+          "gold": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = 16",
+          "pred": "SELECT date_of_appointment FROM table_27383390_4 WHERE position_in_table = \"16\"",
+          "exact_match": false,
+          "similarity": 0.9868
+        },
+        {
+          "question": "What is Date, when Outcome is \"Winner\", and when Opponents is \"Paul Haarhuis Sandon Stolle\"?",
+          "context": "CREATE TABLE table_name_48 (date VARCHAR, outcome VARCHAR, opponents VARCHAR)",
+          "gold": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+          "pred": "SELECT date FROM table_name_48 WHERE outcome = \"winner\" AND opponents = \"paul haarhuis sandon stolle\"",
+          "exact_match": true,
+          "similarity": 1.0
+        },
+        {
+          "question": "What is the location of the Saints having 1979- as Years in GFL?",
+          "context": "CREATE TABLE table_name_37 (location VARCHAR, years_in_gfl VARCHAR, nickname VARCHAR)",
+          "gold": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979-\" AND nickname = \"saints\"",
+          "pred": "SELECT location FROM table_name_37 WHERE years_in_gfl = \"1979\" AND nickname = \"starks\"",
+          "exact_match": false,
+          "similarity": 0.9576
+        },
+        {
+          "question": "Who was the Team that was played against on February 24 and a game after game 55?",
+          "context": "CREATE TABLE table_name_61 (team VARCHAR, game VARCHAR, date VARCHAR)",
+          "gold": "SELECT team FROM table_name_61 WHERE game > 55 AND date = \"february 24\"",
+          "pred": "SELECT team FROM table_name_61 WHERE game > \"game 55\" AND date = \"february 24\"",
+          "exact_match": false,
+          "similarity": 0.9504
+        },
+        {
+          "question": "Who is the monarch with the heir thado minsaw?",
+          "context": "CREATE TABLE table_26460435_8 (monarch VARCHAR, heir VARCHAR)",
+          "gold": "SELECT monarch FROM table_26460435_8 WHERE heir = \"Thado Minsaw\"",
+          "pred": "SELECT monarch FROM table_26460435_8 WHERE heir = \"Thado Minsa\"",
+          "exact_match": false,
+          "similarity": 0.9919
+        }
+      ]
+    }
+  ]
+}

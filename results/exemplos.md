@@ -1,0 +1,12 @@
+# Exemplos de respostas
+
+| Pergunta | Esperado | Modelo base | Modelo treinado |
+|---|---|---|---|
+| When Essendon played away; where did they play? | `SELECT venue FROM table_name_50 WHERE away_team = "essendon"` | ❌ `away_team Essendon` | ✅ `SELECT venue FROM table_name_50 WHERE away_team = "essendon"` |
+| What is the lowest numbered game against Phoenix with a record of 29-17? | `SELECT MIN(game) FROM table_name_61 WHERE opponent = "phoenix" AND record = "29-17"` | ✅ `SELECT MIN(game) FROM table_name_61 WHERE opponent = 'Phoenix' AND record = '29-17'` | ✅ `SELECT MIN(game) FROM table_name_61 WHERE opponent = "phoenix" AND record = "29-17"` |
+| Who did the Texan's play on Week 4? | `SELECT opponent FROM table_name_37 WHERE week = "4"` | ❌ `Texan's played against Kansas City Chiefs in Week 4.` | ✅ `SELECT opponent FROM table_name_37 WHERE week = "4"` |
+| Which Points have Touchdowns larger than 0, and an Extra points smaller than 0? | `SELECT SUM(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0` | ❌ `SELECT points FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0` | ❌ `SELECT MIN(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0` |
+| What is the name of the player who is Sco and moving to greenock morton in the summer? | `SELECT name FROM table_name_83 WHERE nat = "sco" AND transfer_window = "summer" AND moving_to = "greenock morton"` | ❌ `name, "Sco", "greenock morton"` | ❌ `SELECT name FROM table_name_83 WHERE moving_to = "sco" AND nat = "greenock morton" AND transfer_window > 2019` |
+| Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes? | `SELECT T1.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_nu` | ❌ `contestant_number NULL, contestant_name NULL` | ❌ `SELECT T1.contestant_number, T2.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_nu` |
+| Which venue had the result 7-1? | `SELECT venue FROM table_name_50 WHERE result = "7-1"` | ❌ `venue VARCHAR, result VARCHAR WHERE result = "7-1".` | ✅ `SELECT venue FROM table_name_50 WHERE result = "7-1"` |
+| What did the tournament that got an A in 1945 get in 1949? | `SELECT 1949 FROM table_name_22 WHERE 1945 = "a"` | ❌ `SELECT Id FROM table_name_22 WHERE Year = 1949 AND A = 1` | ❌ `SELECT 1949 AS 1945 FROM table_name_22 WHERE Id = "a"` |

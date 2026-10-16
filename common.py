@@ -114,8 +114,9 @@ def load_base_model(for_training: bool = False):
         dtype = torch.float32 if for_training else torch.float16
     else:
         dtype = torch.float32
-    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=dtype)
-    return model.to("cuda")
+    # device_map="cuda" carrega os pesos direto na GPU, sem passar por uma cópia completa na RAM
+    # (importante em notebooks com 8 GB de RAM, onde o carregamento travava o sistema)
+    return AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=dtype, device_map="cuda", low_cpu_mem_usage=True)
 
 
 @torch.no_grad()

@@ -4,10 +4,11 @@
 
 | Integrante | RM |
 |---|---|
-| Nome 1 | RM00000 |
-| Nome 2 | RM00000 |
-| Nome 3 | RM00000 |
-| Nome 4 | RM00000 |
+| Leonardo Moreira Valério | RM550988 |
+| Breno Silva | RM97864 |
+| Joel Barros | RM550378 |
+| Gustavo Dias | RM550820 |
+| Enrico Marquez | RM99325 |
 
 ---
 
@@ -77,7 +78,7 @@ Cada experimento muda **um** parâmetro em relação ao experimento A (referênc
 | A | 2e-4 | 8 | 1 | Referência |
 | B | **5e-5** | 8 | 1 | Learning rate menor aprende mais devagar? |
 | C | 2e-4 | **16** | 1 | Mais capacidade no adapter ajuda? |
-| D | 2e-4 | 8 | **2** | Mais épocas melhoram ou causam overfitting? |
+| D | 2e-4 | 8 | **2** | Não executado: na GTX 1650 de 4 GB cada época levou até ~1 h (ver Análise) |
 
 Fixos: batch efetivo 16 (8 × 2 acumulações), scheduler cosine, warmup 5%, `lora_alpha = 2r`, dropout 0,05.
 
@@ -95,16 +96,46 @@ O **modelo base (sem treino)** também é avaliado, como linha de comparação.
 > Esta seção é preenchida automaticamente ao rodar `python run_experiments.py`.
 
 <!-- RESULTS_START -->
-*Ainda não executado: rode `python run_experiments.py`.*
+**GPU:** NVIDIA GeForce GTX 1650  
+**Modelo:** `Qwen/Qwen2.5-0.5B-Instruct`  
+**Exemplos de teste:** 100 (nunca vistos no treino)
+
+| Experimento | LR | LoRA r | Épocas | Loss final | Tempo treino (s) | VRAM pico (GB) | Exact Match | Similaridade |
+|---|---|---|---|---|---|---|---|---|
+| Modelo base (sem treino) | - | - | - | - | - | - | 13.0% | 55.2% |
+| A_lr2e-4_r8_ep1 | 0.0002 | 8 | 1 | 0.1147 | 440.8 | 2.77 | 57.0% | 96.1% |
+| B_lr5e-5_r8_ep1 | 5e-05 | 8 | 1 | 0.1361 | 3673.9 | 2.77 | 56.0% | 95.7% |
+| C_lr2e-4_r16_ep1 ⭐ | 0.0002 | 16 | 1 | 0.1109 | 3961.0 | 2.83 | 63.0% | 96.2% |
+
+⭐ Melhor configuração: **C_lr2e-4_r16_ep1** (Exact Match 63.0% vs 13.0% do modelo base).
+
+![Curvas de loss](results/loss_curves.png)
+
+### Exemplos (base vs treinado)
+
+| Pergunta | Esperado | Modelo base | Modelo treinado |
+|---|---|---|---|
+| When Essendon played away; where did they play? | `SELECT venue FROM table_name_50 WHERE away_team = "essendon"` | ❌ `away_team Essendon` | ✅ `SELECT venue FROM table_name_50 WHERE away_team = "essendon"` |
+| What is the lowest numbered game against Phoenix with a record of 29-17? | `SELECT MIN(game) FROM table_name_61 WHERE opponent = "phoenix" AND record = "29-17"` | ✅ `SELECT MIN(game) FROM table_name_61 WHERE opponent = 'Phoenix' AND record = '29-17'` | ✅ `SELECT MIN(game) FROM table_name_61 WHERE opponent = "phoenix" AND record = "29-17"` |
+| Who did the Texan's play on Week 4? | `SELECT opponent FROM table_name_37 WHERE week = "4"` | ❌ `Texan's played against Kansas City Chiefs in Week 4.` | ✅ `SELECT opponent FROM table_name_37 WHERE week = "4"` |
+| Which Points have Touchdowns larger than 0, and an Extra points smaller than 0? | `SELECT SUM(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0` | ❌ `SELECT points FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0` | ❌ `SELECT MIN(points) FROM table_name_70 WHERE touchdowns > 0 AND extra_points < 0` |
+| What is the name of the player who is Sco and moving to greenock morton in the summer? | `SELECT name FROM table_name_83 WHERE nat = "sco" AND transfer_window = "summer" AND moving_to = "greenock morton"` | ❌ `name, "Sco", "greenock morton"` | ❌ `SELECT name FROM table_name_83 WHERE moving_to = "sco" AND nat = "greenock morton" AND transfer_window > 2019` |
+| Of all the contestants who got voted, what is the contestant number and name of the contestant who got least votes? | `SELECT T1.contestant_number, T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_nu` | ❌ `contestant_number NULL, contestant_name NULL` | ❌ `SELECT T1.contestant_number, T2.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number = T2.contestant_number GROUP BY T1.contestant_nu` |
+| Which venue had the result 7-1? | `SELECT venue FROM table_name_50 WHERE result = "7-1"` | ❌ `venue VARCHAR, result VARCHAR WHERE result = "7-1".` | ✅ `SELECT venue FROM table_name_50 WHERE result = "7-1"` |
+| What did the tournament that got an A in 1945 get in 1949? | `SELECT 1949 FROM table_name_22 WHERE 1945 = "a"` | ❌ `SELECT Id FROM table_name_22 WHERE Year = 1949 AND A = 1` | ❌ `SELECT 1949 AS 1945 FROM table_name_22 WHERE Id = "a"` |
 <!-- RESULTS_END -->
 
 ### Análise
 
-*(Preencher após rodar: qual configuração venceu e por quê. Exemplo do que observar: o modelo base costuma
-explicar a resposta ou errar nomes de colunas; após o fine-tuning ele responde só com SQL no formato correto.
-Learning rate muito baixo (B) tende a aprender menos em 1 época; mais épocas (D) reduzem a loss, mas é
-preciso conferir se o acerto no teste também sobe.)*
+**O fine-tuning funcionou.** O modelo base (sem treino) acertou exatamente apenas 13% das consultas SQL, com 55,2% de similaridade. Depois do fine-tuning com LoRA, todas as configurações passaram de 56% de acerto exato e 95% de similaridade. Com só 1.000 exemplos e uma época de treino, o modelo aprendeu o formato esperado (responder apenas com o SQL) e a usar corretamente os nomes de tabelas e colunas do schema. Exemplos lado a lado estão em [`results/exemplos.md`](results/exemplos.md).
 
+**Learning rate (A vs B).** Com learning rate 4x menor (5e-5), o experimento B terminou com loss maior (0,136 vs 0,115), ou seja, aprendeu mais devagar na mesma época. No teste, a diferença foi pequena (57% vs 56%), dentro da margem de variação de um conjunto de 100 exemplos.
+
+**LoRA rank (A vs C).** Dobrar o rank de 8 para 16 dobrou os parâmetros treináveis (de 0,88% para 1,75% do modelo) e deu o melhor resultado: **63% de acerto exato** (+6 pontos sobre o A) e a menor loss (0,111). O custo de memória foi mínimo (+0,06 GB de VRAM). Por isso, o experimento C é o modelo usado no frontend.
+
+**Tempo de treino e limitação de hardware.** O experimento A levou 7 minutos, mas B e C levaram cerca de 1 hora cada. A diferença não vem dos parâmetros: a GTX 1650 tem só 4 GB de VRAM, e ao rodar os experimentos em sequência a memória da GPU lotou. Com isso, o Windows passou a usar a RAM do sistema como extensão da GPU, o que deixa o treino muito mais lento. Por esse motivo, o experimento D (2 épocas, ~2 h estimadas) não foi executado dentro do prazo. Em uma GPU com mais memória, ou rodando cada experimento em um processo separado, os tempos seriam comparáveis.
+
+**Limitações.** Com 100 exemplos de teste, diferenças de poucos pontos percentuais não são estatisticamente conclusivas. O *Exact Match* também é rígido: um SQL correto escrito de outra forma conta como erro, por isso reportamos a similaridade junto.
 ## 8. GPU instalada e funcionando no VSCode
 
 ![GPU no VSCode](docs/gpu_vscode.png)
@@ -152,7 +183,7 @@ Interface web em **Gradio** (`python app.py` → http://127.0.0.1:7860):
 
 ```bash
 # 1. Clonar
-git clone https://github.com/SEU_USUARIO/llm-text2sql.git
+git clone https://github.com/Leonardo-Valerio/llm-text2sql.git
 cd llm-text2sql
 
 # 2. Instalar (cria .venv, instala PyTorch com CUDA + dependências e verifica a GPU)
